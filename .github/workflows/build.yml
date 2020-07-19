@@ -19,3 +19,7 @@ jobs:
       run: dotnet build --configuration Release --no-restore
     - name: Pack
       run: dotnet pack --configuration Release --no-build
+    - uses: actions/upload-artifact@v2
+      with:
+        name: nuget-package
+        path: GitHubActionsTest/bin/Release/*.nupkg
