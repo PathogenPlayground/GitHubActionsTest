@@ -1,0 +1,14 @@
+name: Build LLVM
+on: [workflow_dispatch]
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        submodules: recursive
+    - name: Build
+      run: build-native.cmd
+    - uses: actions/upload-artifact@v2
+      with:
+        path: build/bin/*
