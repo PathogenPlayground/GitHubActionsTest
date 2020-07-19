@@ -8,7 +8,7 @@ jobs:
       with:
         submodules: recursive
     - name: Build
-      run: build-native-nosymbols.cmd
+      run: ./build-native-nosymbols.cmd
     - uses: actions/upload-artifact@v2
       with:
         path: build-nosymbols/bin/*
