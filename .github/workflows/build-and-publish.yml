@@ -21,7 +21,7 @@ jobs:
     - name: Pack
       run: dotnet pack --configuration Release --no-build -p:ContinuousIntegrationBuild=true --version-suffix "$Env:GITHUB_RUN_NUMBER"
     - name: Publish
-      run: dotnet nuget push "packages/*.nupkg" --no-symbols=true
+      run: dotnet nuget push "packages\*.nupkg" --no-symbols=true
     - uses: actions/upload-artifact@v2
       with:
         name: nuget-package
