@@ -5,6 +5,7 @@ jobs:
     runs-on: windows-latest
     env:
       TEST_ENVIRONMENT_VARIABLE: Test
+      TEST_2: ${{github.workspace}}\test
     steps:
     - name: Test
-      run: echo Hello $Env:TEST_ENVIRONMENT_VARIABLE World
+      run: echo Hello $Env:TEST_ENVIRONMENT_VARIABLE ! $Env:TEST_2 World
