@@ -16,10 +16,12 @@ jobs:
          NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
     - name: Restore
       run: dotnet restore
+    - name: Print run number
+      run: echo A $GITHUB_RUN_NUMBER B $Env:GITHUB_RUN_NUMBER End
     - name: Build
-      run: dotnet build --configuration Release --no-restore -p:ContinuousIntegrationBuild=true --version-suffix $GITHUB_RUN_NUMBER
+      run: dotnet build --configuration Release --no-restore -p:ContinuousIntegrationBuild=true --version-suffix "$Env:GITHUB_RUN_NUMBER"
     - name: Pack
-      run: dotnet pack --configuration Release --no-build -p:ContinuousIntegrationBuild=true --version-suffix $GITHUB_RUN_NUMBER
+      run: dotnet pack --configuration Release --no-build -p:ContinuousIntegrationBuild=true --version-suffix "$Env:GITHUB_RUN_NUMBER"
     - name: Publish
       run: dotnet nuget push "packages/*.nupkg" --no-symbols
     - uses: actions/upload-artifact@v2
