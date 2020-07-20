@@ -7,6 +7,9 @@ jobs:
     - uses: actions/checkout@v2
       with:
         submodules: recursive
+    # This sadly did not work as I had hoped
+    # I don't think git and tar (which is used by actions/cache) are retaining the file modification times
+    # As a result, Ninja automatically re-runs CMake and rebuilds everything.
     - name: Cache build output
       uses: actions/cache@v2
       with:

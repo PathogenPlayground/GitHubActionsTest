@@ -1,0 +1,10 @@
+name: Environment Variable Test
+on: [workflow_dispatch]
+jobs:
+  build:
+    runs-on: windows-latest
+    env:
+      TEST_ENVIRONMENT_VARIABLE: Test
+    steps:
+    - name: Test
+      run: echo Hello $Env:GITHUB_RUN_NUMBER World
