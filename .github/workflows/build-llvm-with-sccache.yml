@@ -1,0 +1,21 @@
+name: Build LLVM (No Symbols, with sccache)
+on: [workflow_dispatch]
+jobs:
+  build:
+    runs-on: windows-latest
+    env:
+      SCCACHE_DIR: ${{github.workspace}}\sccache\
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        submodules: recursive
+    - name: Cache sccache cache
+      uses: actions/cache@v2
+      with:
+        path: ${{env.SCCACHE_DIR}}
+        key: sccache
+    - name: Build
+      run: ./build-sccache.cmd
+    - uses: actions/upload-artifact@v2
+      with:
+        path: build-sccache/bin/*
