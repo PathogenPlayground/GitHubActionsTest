@@ -1,0 +1,28 @@
+name: Build Project & Publish
+on: [push, pull_request, workflow_dispatch]
+jobs:
+  build:
+    runs-on: windows-latest
+    env:
+      DOTNET_NOLOGO: true
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 5.0.100-preview.6.20318.15
+        source-url: https://nuget.pkg.github.com/PathogenPlayground/index.json
+      env:
+         NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+    - name: Restore
+      run: dotnet restore
+    - name: Build
+      run: dotnet build --configuration Release --no-restore -p:ContinuousIntegrationBuild=true --version-suffix $GITHUB_RUN_NUMBER
+    - name: Pack
+      run: dotnet pack --configuration Release --no-build -p:ContinuousIntegrationBuild=true --version-suffix $GITHUB_RUN_NUMBER
+    - name: Publish
+      run: dotnet nuget push "packages/*.nupkg" --no-symbols
+    - uses: actions/upload-artifact@v2
+      with:
+        name: nuget-package
+        path: GitHubActionsTest/bin/Release/*.nupkg
