@@ -11,6 +11,8 @@ jobs:
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 5.0.100-preview.6.20318.15
+    - name: Show DOTNET_NOLOGO
+      run: echo DOTNET_NOLOGO=$Env:DOTNET_NOLOGO
     - name: Restore
       run: dotnet restore
     - name: Build
