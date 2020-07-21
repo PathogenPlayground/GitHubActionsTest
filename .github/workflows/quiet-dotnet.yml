@@ -2,21 +2,14 @@ name: Please be quiet, .NET SDK
 on: [push, workflow_dispatch]
 jobs:
   build:
-    runs-on: ${{ matrix.os }}
-    strategy:
-      fail-fast: false
-      matrix:
-        os: [ubuntu-latest, windows-latest]
+    runs-on: ubuntu-latest
     env:
-      zDOTNET_CLI_TELEMETRY_OPTOUT: 1
-      zDOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
       DOTNET_NOLOGO: true
-      zDOTNET_GENERATE_ASPNET_CERTIFICATE: false
-      zDOTNET_ADD_GLOBAL_TOOLS_TO_PATH: false
     steps:
+    - uses: actions/checkout@v2
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: 3.1.100-preview1-014459
+        dotnet-version: 3.1.100
     - name: Run dotnet
       run: dotnet build
