@@ -9,10 +9,10 @@ jobs:
         os: [ubuntu-latest, windows-latest]
     env:
       DOTNET_CLI_TELEMETRY_OPTOUT: 1
-      DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
+      zDOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
       DOTNET_NOLOGO: true
       DOTNET_GENERATE_ASPNET_CERTIFICATE: false
-      DOTNET_ADD_GLOBAL_TOOLS_TO_PATH: false
+      zDOTNET_ADD_GLOBAL_TOOLS_TO_PATH: false
     steps:
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
