@@ -1,0 +1,15 @@
+name: Please be quiet, .NET SDK
+on: [push, workflow_dispatch]
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    steps:
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 3.1.300
+    - name: Run dotnet
+      run: dotnet
