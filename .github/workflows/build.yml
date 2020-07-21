@@ -4,7 +4,7 @@ jobs:
   build:
     runs-on: windows-latest
     env:
-      DOTNET_NOLOGO: true
+      DOTNET_NOLOGO: "true"
     steps:
     - uses: actions/checkout@v2
     - name: Setup .NET Core
