@@ -1,0 +1,21 @@
+name: Get LLVM SHA1
+on: [workflow_dispatch]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Get Sha1 of LLVM
+      shell: python
+      run: |
+        import os
+        import re
+        import subprocess
+        output = subprocess.check_output(['git', 'submodule', 'status', 'external/llvm-project'], encoding='utf-8').strip()
+        match = re.compile(r"^.(?P<sha1>[a-f0-9]+) external/llvm-project.*").match(output)
+        assert (match is not None), f"Malformed Git output: '{output}'"
+        sha1 = match.group('sha1')
+        print(f"::set-output name=LLVM_SHA1::{sha1}")
+    - name: Test
+      run: echo LLVM_SHA1='$(LLVM_SHA1)'
