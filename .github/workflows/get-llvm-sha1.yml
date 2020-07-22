@@ -15,6 +15,7 @@ jobs:
         import sys
         print(sys.version)
     - name: Get Sha1 of LLVM
+      id: llvm
       shell: python
       run: |
         import os
@@ -24,6 +25,6 @@ jobs:
         match = re.compile(r"^.(?P<sha1>[a-f0-9]+) external/llvm-project.*").match(output)
         assert (match is not None), f"Malformed Git output: '{output}'"
         sha1 = match.group('sha1')
-        print(f"::set-output name=LLVM_SHA1::{sha1}")
+        print(f"::set-output name=sha1:{sha1}")
     - name: Test
-      run: echo LLVM_SHA1="${LLVM_SHA1}"
+      run: echo "LLVM_SHA1='${{steps.llvm.outputs.sha1}}'"
