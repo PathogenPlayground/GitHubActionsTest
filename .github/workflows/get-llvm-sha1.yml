@@ -26,4 +26,4 @@ jobs:
         sha1 = match.group('sha1')
         print(f"::set-output name=LLVM_SHA1::{sha1}")
     - name: Test
-      run: echo LLVM_SHA1='$(LLVM_SHA1)'
+      run: echo LLVM_SHA1='${LLVM_SHA1}'
