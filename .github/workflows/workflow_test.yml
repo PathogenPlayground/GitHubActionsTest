@@ -1,0 +1,20 @@
+name: Workflow dispatch input test
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+    inputs:
+      publish_packages:
+        description: "Publish packages to GitHub?"
+        required: false
+        default: "false"
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Test
+        if: github.event.inputs.publish_packages == "true"
+        run: echo Package publishing was enabled
+      - name: Test2
+        if: github.event.inputs.publish_packages != "true"
+        run: echo Not enabled
