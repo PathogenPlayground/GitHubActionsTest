@@ -13,8 +13,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Test
-        if: github.event.inputs.publish_packages == "true"
+        if: github.event.inputs.publish_packages == 'true'
         run: echo Package publishing was enabled
       - name: Test2
-        if: github.event.inputs.publish_packages != "true"
+        if: github.event.inputs.publish_packages != 'true'
         run: echo Not enabled
