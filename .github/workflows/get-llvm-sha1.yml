@@ -1,11 +1,16 @@
 name: Get LLVM SHA1
-on: [workflow_dispatch]
+on: [workflow_dispatch, push]
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
       uses: actions/checkout@v2
+    - name: Get Python version
+      shell: python
+      run: |
+        import sys
+        print(sys.version)
     - name: Get Sha1 of LLVM
       shell: python
       run: |
