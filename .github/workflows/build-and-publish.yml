@@ -2,7 +2,10 @@ name: Build Project & Publish
 on: [workflow_dispatch]
 jobs:
   build:
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    runs-on: ${{matrix.os}}
     env:
       DOTNET_NOLOGO: true
     steps:
@@ -27,7 +30,7 @@ jobs:
       run: dotnet pack --configuration Release --no-build -p:ContinuousIntegrationBuild=true --version-suffix "${{github.run_number}}"
     - name: Publish
       # Note: The "No API Key was provided and no API Key could be found" warning on this command can be ignored. Not sure why NuGet complains since it definitely picks it up from setup-dotnet.
-      run: dotnet nuget push "packages\*.nupkg" --no-symbols=true --source=github
+      run: dotnet nuget push "packages/*.nupkg" --no-symbols=true --source=github
     - uses: actions/upload-artifact@v2
       with:
         name: nuget-package
