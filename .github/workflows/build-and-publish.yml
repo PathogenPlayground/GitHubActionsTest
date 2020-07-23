@@ -30,8 +30,10 @@ jobs:
       run: dotnet pack --configuration Release --no-build -p:ContinuousIntegrationBuild=true --version-suffix "${{github.run_number}}-${{matrix.os}}"
     - name: Publish
       # Note: The "No API Key was provided and no API Key could be found" warning on this command can be ignored. Not sure why NuGet complains since it definitely picks it up from setup-dotnet.
-      run: dotnet nuget push "packages/*.nupkg" --no-symbols=true --source=github
+      # Don't try to use "packages/*.nupkg" here, it is not portable between Windows and *nix.
+      run: dotnet nuget push *.nupkg --no-symbols=true --source=github
+      working-directory: packages
     - uses: actions/upload-artifact@v2
       with:
         name: nuget-package
-        path: GitHubActionsTest/bin/Release/*.nupkg
+        path: packages/*.nupkg
