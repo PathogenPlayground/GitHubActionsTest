@@ -11,8 +11,8 @@ jobs:
       id: will-fail
       run: true
     - name: Runs even when there's a fail
-      id: steps.will-succeed.outcome == 'success' && always()
+      if: steps.will-succeed.outcome == 'success' && always()
       run: echo "will-succeed was successful!"
     - name: Shouldn't ever run
-      id: steps.will-fail.outcome == 'success' && always()
+      if: steps.will-fail.outcome == 'success' && always()
       run: echo "will-fail was successful!"
