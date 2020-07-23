@@ -1,5 +1,5 @@
 name: install-sccache.py test
-on: [workflow_dispatch]
+on: [workflow_dispatch, push]
 jobs:
   build:
     strategy:
@@ -15,9 +15,10 @@ jobs:
     - name: Install sccache
       run: python .github/workflows/install-sccache.py
     - name: Verify
+      shell: bash
       run: |
         echo "SCCACHE_DIR='$SCCACHE_DIR'"
         echo ::group::ls
         ls -lRh build-sccache
-        echo ::endgroup
-        sccache
+        echo ::endgroup::
+        sccache || true
