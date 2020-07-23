@@ -2,18 +2,23 @@ name: Build Project & Publish
 on: [workflow_dispatch]
 jobs:
   build:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     env:
       DOTNET_NOLOGO: true
     steps:
     - uses: actions/checkout@v2
+    - uses: actions/setup-python@v2
+      with:
+        python-version: '3.8'
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 5.0.100-preview.6.20318.15
-        source-url: https://nuget.pkg.github.com/pathogenplayground/index.json
+    - name: Configure NuGet
+      run: python .github/workflows/make-nuget-config.py
       env:
-         NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+        GITHUB_REPOSITORY_OWNER: ${{github.repository_owner}}
+        GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
     - name: Restore
       run: dotnet restore
     - name: Build
@@ -22,7 +27,7 @@ jobs:
       run: dotnet pack --configuration Release --no-build -p:ContinuousIntegrationBuild=true --version-suffix "$Env:GITHUB_RUN_NUMBER"
     - name: Publish
       # Note: The "No API Key was provided and no API Key could be found" warning on this command can be ignored. Not sure why NuGet complains since it definitely picks it up from setup-dotnet.
-      run: dotnet nuget push "packages\*.nupkg" --no-symbols=true
+      run: dotnet nuget push "packages\*.nupkg" --no-symbols=true --source=github
     - uses: actions/upload-artifact@v2
       with:
         name: nuget-package
