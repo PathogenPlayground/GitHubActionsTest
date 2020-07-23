@@ -25,9 +25,9 @@ jobs:
     - name: Restore
       run: dotnet restore
     - name: Build
-      run: dotnet build --configuration Release --no-restore -p:ContinuousIntegrationBuild=true --version-suffix "${{github.run_number}}"
+      run: dotnet build --configuration Release --no-restore -p:ContinuousIntegrationBuild=true --version-suffix "${{github.run_number}}-${{matrix.os}}"
     - name: Pack
-      run: dotnet pack --configuration Release --no-build -p:ContinuousIntegrationBuild=true --version-suffix "${{github.run_number}}"
+      run: dotnet pack --configuration Release --no-build -p:ContinuousIntegrationBuild=true --version-suffix "${{github.run_number}}-${{matrix.os}}"
     - name: Publish
       # Note: The "No API Key was provided and no API Key could be found" warning on this command can be ignored. Not sure why NuGet complains since it definitely picks it up from setup-dotnet.
       run: dotnet nuget push "packages/*.nupkg" --no-symbols=true --source=github
