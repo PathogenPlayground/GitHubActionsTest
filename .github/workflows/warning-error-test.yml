@@ -1,0 +1,12 @@
+name: Warning/Error Test
+on: [workflow_dispatch]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Test Message
+      run: echo "Hello, world!"
+    - name: Test Warning
+      run: echo "::warning::Hello, world!"
+    - name: Test Error
+      run: echo "::error::Hello, world!"
