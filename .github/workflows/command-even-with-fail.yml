@@ -9,7 +9,7 @@ jobs:
       run: true
     - name: This command will fail
       id: will-fail
-      run: true
+      run: false
     - name: Runs even when there's a fail
       if: steps.will-succeed.outcome == 'success' && always()
       run: echo "will-succeed was successful!"
