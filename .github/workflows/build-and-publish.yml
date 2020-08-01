@@ -30,7 +30,7 @@ jobs:
     - name: Pack
       run: dotnet pack --configuration ${{matrix.configuration}} --no-build -p:ContinuousIntegrationBuild=true --version-suffix "${{github.run_number}}-${{matrix.os}}-${{matrix.configuration}}"
     - name: Publish
-      if: ${{matrix.configuration}} == 'Release'
+      if: matrix.configuration == 'Release'
       # Note: The "No API Key was provided and no API Key could be found" warning on this command can be ignored. Not sure why NuGet complains since it definitely picks it up from setup-dotnet.
       # Don't try to use "packages/*.nupkg" here, it is not portable between Windows and *nix.
       run: dotnet nuget push *.nupkg --no-symbols=true --source=github
