@@ -1,0 +1,17 @@
+name: Dump GITHUB_EVENT_PATH
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+    inputs:
+      will_publish_packages:
+        description: "Test input"
+        default: "Hello, world!"
+jobs:
+  test:
+    runs-on: ubuntu-latest:
+    steps:
+    - name: Test
+      run: |
+        echo GITHUB_EVENT_PATH = '$GITHUB_EVENT_PATH'
+        cat $GITHUB_EVENT_PATH
