@@ -7,7 +7,6 @@ on:
         default: "false"
 jobs:
   one:
-    id: one
     runs-on: ubuntu-latest
     outputs:
       second_job_enabled: ${{steps.second-job-check.outputs.second_job_enabled}}
