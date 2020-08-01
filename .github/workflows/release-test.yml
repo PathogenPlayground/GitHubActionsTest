@@ -1,0 +1,25 @@
+name: Release Test
+on:
+  workflow_dispatch:
+jobs:
+  make-release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Create release
+        id: create-release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+        with:
+          tag_name: v${{github.run_number}}
+          release_Name: Test Release v${{github.run_number}}
+          body: TODO
+          draft: true
+          prerelease: false
+      - name: Output release info
+        run: |
+          echo Release id: ${{steps.create-release.outputs.id}}
+          echo Release URL: ${{steps.create-release.outputs.html_url}}
+          echo Release upload URL: ${{steps.create-release.outputs.upload_url}}
