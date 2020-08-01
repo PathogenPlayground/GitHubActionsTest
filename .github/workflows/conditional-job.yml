@@ -9,7 +9,7 @@ jobs:
   one:
     runs-on: ubuntu-latest
     outputs:
-      second_job_enabled: ${{steps.second-job-check.outputs.second_job_enabled}}
+      second_job_enabled: steps.second-job-check.outputs.second_job_enabled
     steps:
       - name: Second job check
         id: second-job-check
