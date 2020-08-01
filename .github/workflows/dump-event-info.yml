@@ -9,7 +9,7 @@ on:
         default: "Hello, world!"
 jobs:
   test:
-    runs-on: ubuntu-latest:
+    runs-on: ubuntu-latest
     steps:
     - name: Test
       run: |
