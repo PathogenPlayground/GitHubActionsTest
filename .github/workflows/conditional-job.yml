@@ -9,7 +9,7 @@ jobs:
   job_one:
     runs-on: ubuntu-latest
     outputs:
-      second-job-enabled: steps.second-job-check.outputs.second_job_enabled
+      second_job_enabled: steps.second-job-check.outputs.second_job_enabled
     steps:
       - name: Second job check
         id: second-job-check
@@ -17,6 +17,6 @@ jobs:
   two:
     runs-on: ubuntu-latest
     needs: job_one
-    if: needs.job_one.outputs.second-job-enabled == 'true'
+    if: needs.job_one.outputs.second_job_enabled == 'true'
     steps:
       - run: echo "Second job ran!"
