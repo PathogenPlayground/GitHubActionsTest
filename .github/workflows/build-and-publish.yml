@@ -5,6 +5,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
+        configuration: [Debug, Release]
     runs-on: ${{matrix.os}}
     env:
       DOTNET_NOLOGO: true
@@ -21,19 +22,20 @@ jobs:
       run: python .github/workflows/make-nuget-config.py
       env:
         GITHUB_REPOSITORY_OWNER: ${{github.repository_owner}}
-        GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+        GITHUB_TOKEN: ${{github.token}}
     - name: Restore
       run: dotnet restore
     - name: Build
-      run: dotnet build --configuration Release --no-restore -p:ContinuousIntegrationBuild=true --version-suffix "${{github.run_number}}-${{matrix.os}}"
+      run: dotnet build --configuration ${{matrix.configuration}} --no-restore -p:ContinuousIntegrationBuild=true --version-suffix "${{github.run_number}}-${{matrix.os}}-${{matrix.configuration}}"
     - name: Pack
-      run: dotnet pack --configuration Release --no-build -p:ContinuousIntegrationBuild=true --version-suffix "${{github.run_number}}-${{matrix.os}}"
+      run: dotnet pack --configuration ${{matrix.configuration}} --no-build -p:ContinuousIntegrationBuild=true --version-suffix "${{github.run_number}}-${{matrix.os}}-${{matrix.configuration}}"
     - name: Publish
+      if: ${{matrix.configuration}} = 'Release'
       # Note: The "No API Key was provided and no API Key could be found" warning on this command can be ignored. Not sure why NuGet complains since it definitely picks it up from setup-dotnet.
       # Don't try to use "packages/*.nupkg" here, it is not portable between Windows and *nix.
       run: dotnet nuget push *.nupkg --no-symbols=true --source=github
       working-directory: packages
     - uses: actions/upload-artifact@v2
       with:
-        name: nuget-package
-        path: packages/*.nupkg
+        name: nuget-package-${{matrix.os}}-${{matrix.configuration}}
+        path: packages/**/*.nupkg
