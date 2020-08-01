@@ -10,3 +10,7 @@ jobs:
       run: echo "::warning::Hello, world!"
     - name: Test Error
       run: echo "::error::Hello, world!"
+    - name: Test Message stderr
+      run: echo "Hello, world! (stderr)" >&2
+    - name: Test Error stderr
+      run: echo "::error::Hello, world! (stderr)" >&2
