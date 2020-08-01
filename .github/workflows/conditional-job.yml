@@ -6,17 +6,17 @@ on:
         description: "Run second job?"
         default: "false"
 jobs:
-  one:
+  job-one:
     runs-on: ubuntu-latest
     outputs:
-      second_job_enabled: steps.second-job-check.outputs.second_job_enabled
+      second-job-enabled: steps.second-job-check.outputs.second_job_enabled
     steps:
       - name: Second job check
         id: second-job-check
         run: echo "::set-output name=second_job_enabled::${{github.event.inputs.will_run_second_job}}"
   two:
     runs-on: ubuntu-latest
-    needs: one
-    if: needs.one.outputs.second_job_enabled == 'true'
+    needs: job-one
+    if: needs.job-one.outputs.second-job-enabled == 'true'
     steps:
       - run: echo "Second job ran!"
