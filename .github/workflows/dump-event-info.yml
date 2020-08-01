@@ -14,5 +14,6 @@ jobs:
     - name: Test
       run: |
         ls /home/runner/work/_temp/_github_workflow/
+        echo ${{github.event_path}}
         echo GITHUB_EVENT_PATH = "'$GITHUB_EVENT_PATH'"
         cat $GITHUB_EVENT_PATH
