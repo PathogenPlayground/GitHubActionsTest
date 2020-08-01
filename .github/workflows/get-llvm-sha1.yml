@@ -1,5 +1,5 @@
 name: Get LLVM SHA1
-on: [workflow_dispatch, push]
+on: [workflow_dispatch]
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -14,8 +14,8 @@ jobs:
       run: |
         import sys
         print(sys.version)
-    - name: Get Sha1 of LLVM
+    - name: Get revision of LLVM
       id: llvm
       run: python .github/workflows/get-llvm-revision.py
     - name: Test
-      run: echo "LLVM_SHA1='${{steps.llvm.outputs.sha1}}'"
+      run: echo "LLVM Revision: '${{steps.llvm.outputs.revision}}'"
