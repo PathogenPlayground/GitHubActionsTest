@@ -22,8 +22,6 @@ jobs:
     steps:
       # ----------------------------------------------------------------------- Checkout
       - name: Checkout
-        # We intentionally don't checkout submodules here
-        # They will be restored as needed only if we need to build LLVM.
         uses: actions/checkout@v2
 
       # ----------------------------------------------------------------------- Setup Python
@@ -36,7 +34,7 @@ jobs:
       - name: Send CI Failure Notification
         run: python .github/workflows/send-ci-failure-notification.py
         env:
-          webhook_url: ${{secrets.TEAMS_WEBHOOK_URLL}}
+          webhook_url: ${{secrets.TEAMS_WEBHOOK_URL}}
           github_organization: ${{github.repository_owner}}
           github_repo: ${{github.repository}}
           github_workflow_name: ${{github.workflow}}
