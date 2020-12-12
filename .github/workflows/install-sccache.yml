@@ -1,5 +1,6 @@
 name: install-sccache.py test
-on: [workflow_dispatch, push]
+#on: [workflow_dispatch, push]
+on: [workflow_dispatch]
 jobs:
   build:
     strategy:

@@ -3,7 +3,18 @@ on:
   push:
   workflow_dispatch:
 jobs:
+  fake-job:
+    strategy:
+      matrix:
+        configuration: ['Debug', 'Release']
+    name: Fake ${{matrix.configuration}}
+    runs-on: ubuntu-latest
+    steps:
+      - name: failure
+        run: false
   send-notification:
+    needs: fake-job
+    if: failure()
     runs-on: ubuntu-latest
     steps:
       # ----------------------------------------------------------------------- Checkout

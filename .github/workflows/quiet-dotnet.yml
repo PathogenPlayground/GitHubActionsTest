@@ -1,5 +1,6 @@
 name: Please be quiet, .NET SDK
-on: [workflow_dispatch, push]
+#on: [workflow_dispatch, push]
+on: [workflow_dispatch]
 jobs:
   build:
     runs-on: ubuntu-latest
