@@ -1,9 +1,9 @@
-name: Release Test
+name: Send CI Failure Notification
 on:
   push:
   workflow_dispatch:
 jobs:
-  make-release:
+  send-notification:
     runs-on: ubuntu-latest
     steps:
       # ----------------------------------------------------------------------- Checkout

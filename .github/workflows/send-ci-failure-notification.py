@@ -12,7 +12,6 @@ def get_environment_variable(name):
     return ret
 
 webhook_url = get_environment_variable('webhook_url')
-github_organization = get_environment_variable('github_organization')
 github_repo = get_environment_variable('github_repo')
 github_workflow_name = get_environment_variable('github_workflow_name')
 github_run_number = get_environment_variable('github_run_number')
@@ -30,7 +29,7 @@ card_data = f'''{{
           "body": [
             {{
               "type": "TextBlock",
-              "text": "{github_organization}/{github_repo}: {github_workflow_name} Failed!",
+              "text": "{github_repo}: {github_workflow_name} Failed!",
               "wrap": true,
               "weight": "bolder"
             }},
@@ -40,7 +39,7 @@ card_data = f'''{{
                 {{
                   "type": "Action.OpenUrl",
                   "title": "Show Run",
-                  "url": "https://github.com/{github_organization}/{github_repo}/actions/runs/{github_run_number}"
+                  "url": "https://github.com/{github_repo}/actions/runs/{github_run_number}"
                 }}
               ]
             }}
