@@ -7,11 +7,12 @@ jobs:
     strategy:
       matrix:
         configuration: ['Debug', 'Release']
+        command: ['true', 'false']
     name: Fake ${{matrix.configuration}}
     runs-on: ubuntu-latest
     steps:
       - name: failure
-        run: true
+        run: ${{matrix.command}}
   send-notification:
     needs: fake-job
     if: failure()
