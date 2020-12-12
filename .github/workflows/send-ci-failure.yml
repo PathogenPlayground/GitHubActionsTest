@@ -1,0 +1,30 @@
+name: Release Test
+on:
+  push:
+  workflow_dispatch:
+jobs:
+  make-release:
+    runs-on: ubuntu-latest
+    steps:
+      # ----------------------------------------------------------------------- Checkout
+      - name: Checkout
+        # We intentionally don't checkout submodules here
+        # They will be restored as needed only if we need to build LLVM.
+        uses: actions/checkout@v2
+
+      # ----------------------------------------------------------------------- Setup Python
+      - name: Setup Python 3.8
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.8'
+
+      # ----------------------------------------------------------------------- Send failure
+      - name: Send CI Failure Notification
+        run: python .github/workflows/send-ci-failure-notification.py
+        env:
+          webhook_url: ${{secrets.TEAMS_WEBHOOK_URL}}
+          github_organization: ${{github.repository_owner}}
+          github_repo: ${{github.repository}}
+          github_workflow_name: ${{github.workflow}}
+          github_run_number: ${{github.run_id}}
+
