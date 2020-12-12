@@ -17,6 +17,7 @@ jobs:
   send-notification:
     needs: fake-job
     if: failure()
+    continue-on-error: true
     runs-on: ubuntu-latest
     steps:
       # ----------------------------------------------------------------------- Checkout
@@ -33,6 +34,7 @@ jobs:
 
       # ----------------------------------------------------------------------- Send failure
       - name: Send CI Failure Notification
+        if: secrets.TEAMS_WEBHOOK_URLL != ''
         run: python .github/workflows/send-ci-failure-notification.py
         env:
           webhook_url: ${{secrets.TEAMS_WEBHOOK_URLL}}
