@@ -7,7 +7,7 @@ def get_environment_variable(name):
     ret = os.getenv(name)
 
     if ret is None or ret == '':
-        gha.print_error(f"Missing required parameter '{name}'")
+        print(f"::error::Missing required parameter '{name}'", file=sys.stderr)
 
     return ret
 
