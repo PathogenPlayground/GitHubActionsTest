@@ -16,7 +16,7 @@ jobs:
         run: ${{matrix.command}}
   send-notification:
     needs: fake-job
-    if: failure() && secrets.TEAMS_WEBHOOK_URLLL != ''
+    if: failure() && secrets.TEAMS_WEBHOOK_URL != ''
     runs-on: ubuntu-latest
     steps:
       # ----------------------------------------------------------------------- Checkout
