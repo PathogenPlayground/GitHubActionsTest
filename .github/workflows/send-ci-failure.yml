@@ -5,6 +5,7 @@ on:
 jobs:
   fake-job:
     strategy:
+      fail-fast: false
       matrix:
         configuration: ['Debug', 'Release']
         command: ['true', 'false']
