@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: failure
-        run: false
+        run: true
   send-notification:
     needs: fake-job
     if: failure()
