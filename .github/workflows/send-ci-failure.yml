@@ -15,7 +15,7 @@ jobs:
       - name: failure
         run: ${{matrix.command}}
   send-notification:
-    needs: fake-job
+    needs: *
     if: failure()
     runs-on: ubuntu-latest
     steps:
