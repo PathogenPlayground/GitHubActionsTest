@@ -1,0 +1,14 @@
+name: Release Event Test
+on:
+  release:
+jobs:
+  do-release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print release info
+        run: |
+          echo github.ref = ${{github.ref}}
+          echo github.event_name = ${{github.event_name}}
+          echo github.event.action = ${{github.event.action}}
+          echo github.event.release.tag_name = ${{github.event.release.tag_name}}
+          echo github.event.release.name = ${{github.event.release.name}}
