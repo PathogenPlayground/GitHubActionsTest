@@ -17,6 +17,7 @@ jobs:
   publish-release:
     environment: TestEnvironment
     runs-on: ubuntu-latest
+    steps:
     - name: Create test file
       run: echo "Hello, world! ${{github.event.release.name}}" > test.txt
     - name: Upload test file
