@@ -15,7 +15,7 @@ jobs:
           echo "github.event.release.name = ${{github.event.release.name}}"
           echo "github.event.release.upload_url = ${{github.event.release.upload_url}}"
   publish-release:
-    environment: TestEnvironment
+    #environment: TestEnvironment
     runs-on: ubuntu-latest
     steps:
     - name: Create test file
@@ -56,6 +56,6 @@ jobs:
                 'content-length': contentLength
               },
               name: path.basename(filePath),
-              file: fileContents
+              data: fileContents
             });
           }
