@@ -19,7 +19,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Create test file
-      run: echo "Hello, world! ${{github.event.release.name}}" > test.txt
+      run: |
+        echo "Hello, world! ${{github.event.release.name}}" > test.txt
+        echo "The other file! ${{github.event.release.name}}" > test2.txt
     - name: Upload test file
       uses: actions/upload-release-asset@v1
       env:
@@ -27,5 +29,33 @@ jobs:
       with:
         upload_url: ${{github.event.release.upload_url}}
         asset_path: ./test.txt
-        asset_name: test.txt
+        asset_name: test-uploadaction.txt
         asset_content_type: text/plain
+    - name: Upload test files
+      uses: actions/github-script@v3
+      with:
+        github-token: ${{secrets.GITHUB_TOKEN}}
+        user-agent: actions/github-script for ${{github.repository}}
+        script: |
+          const fs = require('fs').promises;
+          const path = require('path');
+
+          for (let filePath of await fs.readdir('.')) {
+            const fileExtension = path.extname(filePath);
+            if (fileExtension != '.txt') {
+              continue;
+            }
+
+            console.log(`Uploading '${filePath}'`);
+            const contentLength = (await fs.stat(filePath)).size;
+            const fileContents = await fs.readFile(filePath);
+            await github.repos.uploadReleaseAsset({
+              url: '${{github.event.release.upload_url}}',
+              headers: {
+                'content-type': 'application/octet-stream',
+                'content-length': contentLength
+              },
+              name: path.basename(filePath),
+              file: fileContents
+            });
+          }
