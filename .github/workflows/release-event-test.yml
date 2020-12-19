@@ -1,6 +1,7 @@
 name: Release Event Test
 on:
   release:
+    types: [published]
 jobs:
   do-release:
     runs-on: ubuntu-latest
@@ -12,3 +13,18 @@ jobs:
           echo "github.event.action = ${{github.event.action}}"
           echo "github.event.release.tag_name = ${{github.event.release.tag_name}}"
           echo "github.event.release.name = ${{github.event.release.name}}"
+          echo "github.event.release.upload_url = ${{github.event.release.upload_url}}"
+  publish-release:
+    environment: TestEnvironment
+    runs-on: ubuntu-latest
+    - name: Create test file
+      run: echo "Hello, world! ${{github.event.release.name}}" > test.txt
+    - name: Upload test file
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+      with:
+        upload_url: ${{github.event.release.upload_url}}
+        asset_path: ./test.txt
+        asset_name: test.txt
+        asset_content_type: text/plain
