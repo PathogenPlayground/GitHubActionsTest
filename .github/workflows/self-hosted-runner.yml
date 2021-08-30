@@ -1,0 +1,9 @@
+name: Self-hosted Runner Test
+on: [workflow_dispatch, push]
+jobs:
+  build:
+    name: Test Job
+    runs-on: [self-hosted, linux, arm64, test-label]
+    steps:
+      - name: Do the thing
+        run: echo "Hello, world!"
