@@ -1,0 +1,18 @@
+name: Restricted Environment Test
+on: [workflow_dispatch, push, pull_request]
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-latest
+            environment: Default
+          - os: ubuntu-18.04
+            environment: TestEnvironment
+    name: Test Job - ${{matrix.os}} (${{matrix.environment}})
+    runs-on: ubuntu-latest
+    environment: ${{matrix.environment}}
+    steps:
+      - name: Do the thing
+        run: echo "Hello, world!"
