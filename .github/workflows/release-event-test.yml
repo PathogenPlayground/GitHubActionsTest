@@ -1,7 +1,7 @@
 name: Release Event Test
 on:
   release:
-    types: [published]
+    #types: [published]
 jobs:
   do-release:
     runs-on: ubuntu-latest
