@@ -6,12 +6,14 @@ on:
     # -- Oh!
     # > Note: The release event is not triggered for draft releases.
     # Emphasis on ****release event****, I read this as meaning to be the "released" type.
+    # `created` will fire if you create a release and publish immediately without making it a draft first.
     #####################
     # Edited works!
     # Not sure how to trigger unpublished...
     # Deleted works
-    # Not sure what prereleased/released are either (I would think they describe what I'd call "publish", but that's obviously a separate event)
-    types: [published, unpublished, created, edited, deleted, prereleased, released]
+    # `released` (and probably `prereleased`) seem to only happen if you publish immediately without making a draft first.
+    #types: [published, unpublished, created, edited, deleted, prereleased, released]
+    types: [published]
 jobs:
   do-release:
     runs-on: ubuntu-latest
@@ -29,6 +31,8 @@ jobs:
     if: github.event.action == 'published'
     runs-on: ubuntu-latest
     steps:
+    - name: Checkout
+      uses: actions/checkout@v2
     - name: Test getting the release URL in a GitHub script
       uses: actions/github-script@v3
       with:
@@ -52,26 +56,4 @@ jobs:
       with:
         #github-token: ${{secrets.GITHUB_TOKEN}}
         user-agent: actions/github-script for ${{github.repository}}
-        script: |
-          const fs = require('fs').promises;
-          const path = require('path');
-
-          for (let filePath of await fs.readdir('.')) {
-            const fileExtension = path.extname(filePath);
-            if (fileExtension != '.txt') {
-              continue;
-            }
-
-            console.log(`Uploading '${filePath}'`);
-            const contentLength = (await fs.stat(filePath)).size;
-            const fileContents = await fs.readFile(filePath);
-            await github.repos.uploadReleaseAsset({
-              url: '${{github.event.release.upload_url}}',
-              headers: {
-                'content-type': 'application/octet-stream',
-                'content-length': contentLength
-              },
-              name: path.basename(filePath),
-              data: fileContents
-            });
-          }
+        script: await require('./.github/workflows/upload-release-assets.js')(github, context);
