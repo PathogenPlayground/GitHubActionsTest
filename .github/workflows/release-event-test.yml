@@ -29,6 +29,11 @@ jobs:
     if: github.event.action == 'published'
     runs-on: ubuntu-latest
     steps:
+    - name: Test getting the release URL in a GitHub script
+      uses: actions/github-script@v3
+      with:
+        user-agent: actions/github-script for ${{github.repository}}
+        script: console.log(context);
     - name: Create test file
       run: |
         echo "Hello, world! ${{github.event.release.name}}" > test.txt
@@ -45,7 +50,7 @@ jobs:
     - name: Upload test files
       uses: actions/github-script@v3
       with:
-        github-token: ${{secrets.GITHUB_TOKEN}}
+        #github-token: ${{secrets.GITHUB_TOKEN}}
         user-agent: actions/github-script for ${{github.repository}}
         script: |
           const fs = require('fs').promises;
