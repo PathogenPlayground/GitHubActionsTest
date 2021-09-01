@@ -1,12 +1,19 @@
 name: Needs skipped
 on:
   workflow_dispatch:
+    inputs:
+      should_fail:
+        description: "Should fail?"
+        default: "false"
 jobs:
   one:
     runs-on: ubuntu-latest
     steps:
       - name: Step
         run: echo "Hello, world!"
+      - name: Fail
+        if: github.event.inputs.should_fail == 'true'
+        run: false
   two:
     runs-on: ubuntu-latest
     if: false
@@ -16,6 +23,7 @@ jobs:
   three:
     runs-on: ubuntu-latest
     needs: [one, two]
+    if: failure()
     steps:
       - name: Step
         run: echo "I am the last step"
