@@ -1,0 +1,21 @@
+name: Needs skipped
+on:
+  workflow_dispatch:
+jobs:
+  one:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Step
+        run: echo "Hello, world!"
+  two:
+    runs-on: ubuntu-latest
+    if: false
+    steps:
+      - name: Step
+        run: echo "Empty world."
+  three:
+    runs-on: ubuntu-latest
+    needs: [one, two]
+    steps:
+      - name: Step
+        run: echo "I am the last step"
