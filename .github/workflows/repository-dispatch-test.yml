@@ -1,0 +1,15 @@
+name: Repository Dispatch Test
+on:
+  repository_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print info
+        run: |
+          echo "github.ref = ${{github.ref}}"
+          echo "github.event_name = ${{github.event_name}}"
+          echo "github.event.action = ${{github.event.action}}"
+          echo "github.event.release.tag_name = ${{github.event.release.tag_name}}"
+          echo "github.event.release.name = ${{github.event.release.name}}"
+          echo "github.event.release.upload_url = ${{github.event.release.upload_url}}"

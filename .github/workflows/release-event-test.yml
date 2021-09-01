@@ -1,6 +1,16 @@
 name: Release Event Test
 on:
   release:
+    # https://docs.github.com/en/developers/webhooks-and-events/webhooks/webhook-events-and-payloads#release
+    # Seems `created` doesn't work here or it's not what I think it is
+    # -- Oh!
+    # > Note: The release event is not triggered for draft releases.
+    # Emphasis on ****release event****, I read this as meaning to be the "released" type.
+    #####################
+    # Edited works!
+    # Not sure how to trigger unpublished...
+    # Deleted works
+    # Not sure what prereleased/released are either (I would think they describe what I'd call "publish", but that's obviously a separate event)
     types: [published, unpublished, created, edited, deleted, prereleased, released]
 jobs:
   do-release:
