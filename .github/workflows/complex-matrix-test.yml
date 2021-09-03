@@ -55,3 +55,30 @@ jobs:
           echo ${{matrix.os.name}}
           echo ${{matrix.os.runs-on}}
           echo ${{matrix.create-packages}}
+  biohazrd-not-working:
+    strategy:
+      fail-fast: false
+      matrix:
+        platform:
+          - name: Windows
+            architecture: x64
+            runs-on: windows-latest
+          - name: Linux
+            architecture: x64
+            runs-on: ubuntu-latest
+        configuration: ['Debug', 'Release']
+        include:
+          # Linux Release x64 builds create packages (if applicable)
+          - platform:
+              runs-on: ubuntu-latest
+            configuration: Release
+            create-packages: true
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print matrix variables
+        run: |
+          echo platform.name: '${{matrix.platform.name}}'
+          echo platform.architecture: '${{matrix.platform.architecture}}'
+          echo platform.runs-on: '${{matrix.platform.runs-on}}'
+          echo configuration: '${{matrix.configuration}}'
+          echo create-packages: '${{matrix.create-packages}}'
