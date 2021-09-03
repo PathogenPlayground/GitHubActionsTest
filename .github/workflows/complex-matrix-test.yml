@@ -1,0 +1,37 @@
+name: Complex Matrix Test
+on:
+  push:
+jobs:
+  multiple-additions:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: ['windows-latest', 'ubuntu-latest']
+        configuration: ['Debug', 'Release']
+        include:
+          - os: windows-latest
+            name: Windows
+          - os: ubuntu-latest
+            name: Ubuntu
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print matrix variables
+        run: |
+          echo ${{matrix.os}}
+          echo ${{matrix.configuration}}
+          echo ${{matrix.name}}
+  objects:
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - name: Windows
+            runs-on: windows-latest
+          - name: Linux
+            runs-on: ubuntu-latest
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print matrix variables
+        run: |
+          echo ${{matrix.os.name}}
+          echo ${{matrix.os.runs-on}}
