@@ -82,3 +82,9 @@ jobs:
           echo platform.runs-on: '${{matrix.platform.runs-on}}'
           echo configuration: '${{matrix.configuration}}'
           echo create-packages: '${{matrix.create-packages}}'
+      - name: Create packages 1
+        if: matrix.create-packages
+        run: echo Beep boop I am NuGet packer
+      - name: Create packages 2
+        if: matrix.create-packages == 'true'
+        run: echo Beep boop I am NuGet packer
