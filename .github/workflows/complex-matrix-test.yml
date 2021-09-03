@@ -35,3 +35,23 @@ jobs:
         run: |
           echo ${{matrix.os.name}}
           echo ${{matrix.os.runs-on}}
+  objects-with-addition:
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - name: Windows
+            runs-on: windows-latest
+          - name: Linux
+            runs-on: ubuntu-latest
+        include:
+          - os:
+              runs-on: ubuntu-latest
+            create-packages: true
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print matrix variables
+        run: |
+          echo ${{matrix.os.name}}
+          echo ${{matrix.os.runs-on}}
+          echo ${{matrix.create-packages}}
