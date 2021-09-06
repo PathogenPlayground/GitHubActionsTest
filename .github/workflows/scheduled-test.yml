@@ -1,0 +1,12 @@
+name: Scheduled test
+on:
+  schedule:
+    # Every 10 minutes
+    - cron: '*/10 * * * *'
+    # Every 7 minutes
+    - cron: '*/7 * * * *'
+jobs:
+  test:
+    steps:
+      - name: Test
+        run: echo Hello!
