@@ -1,12 +1,13 @@
 name: Scheduled test
 on:
   schedule:
+    # Every hour
+    - cron: '0 * * * *'
     # Every 10 minutes
     - cron: '*/10 * * * *'
-    # Every 7 minutes
-    - cron: '*/7 * * * *'
 jobs:
   test:
+    runs-on: ubuntu-latest
     steps:
       - name: Test
         run: echo Hello!
