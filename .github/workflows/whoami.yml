@@ -1,0 +1,10 @@
+name: Who am I?
+on: [workflow_dispatch]
+jobs:
+  whoami:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Who am I?
+      run: whoami
+    - name: Where am I?
+      run: pwd
