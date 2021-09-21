@@ -8,3 +8,5 @@ jobs:
       run: whoami
     - name: Where am I?
       run: pwd
+    - name: Look around...
+      run: ls -la /home/runner
