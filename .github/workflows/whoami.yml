@@ -14,5 +14,7 @@ jobs:
       run: ls -la /home/runner/runners
     - name: What is the work folder configured as?
       run: cat /home/runner/runners/2.282.1/.runner
+    - name: Print setup info
+      run: cat /home/runner/runners/2.282.1/.setup_info
     - name: Look around even more...
       run: ps aux
