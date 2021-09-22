@@ -6,7 +6,9 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - os: ubuntu-latest
+          # If this is just `ubuntu-latest`, GitHub will let our self-hosted runner take this job! (And it seems to prefer it too!)
+          - os: [ubuntu-latest, X64]
+          #- os: ubuntu-latest
           - os: [ubuntu-latest, arm64]
     name: Test ${{matrix.os}}
     runs-on: ${{matrix.os}}
