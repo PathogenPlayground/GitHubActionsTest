@@ -1,0 +1,15 @@
+name: ARM Runner Test
+on: [workflow_dispatch]
+jobs:
+  test:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-latest
+          - os: [ubuntu-latest, arm64]
+    name: Test ${{matrix.os}}
+    runs-on: ${{matrix.os}}
+    steps:
+    - run: uname -a
+    - run: dpkg --print-architecture
