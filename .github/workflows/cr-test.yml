@@ -1,0 +1,16 @@
+name: Test carriage return behavior
+on: [workflow_dispatch, push]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Test
+      run: |
+        printf "Loading 0%%...\r"
+        printf "Loading 5%%...\r"
+        printf "Loading 10%%...\r"
+        printf "Loading 50%%...\r"
+        printf "Loading 50%%...\rLoading 57%%...\r"
+        sleep 15
+        printf "Loading 100%%...\r"
+        printf "Done\n"
