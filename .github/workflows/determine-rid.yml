@@ -1,0 +1,32 @@
+name: determine-rid Test
+on: [push, workflow_dispatch]
+jobs:
+  test-unix:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-latest
+          - os: ubuntu-arm64-latest
+          - os: macos-latest
+    name: Test ${{matrix.os}}
+    runs-on: ${{matrix.os}}
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - run: uname -s
+    - run: uname -m
+    - run: ./determine-rid.sh
+  test-windows:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: windows-latest
+    name: Test ${{matrix.os}}
+    runs-on: ${{matrix.os}}
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - run: echo $env:PROCESSOR_ARCHITECTURE
+    - run: ./determine-rid.cmd
