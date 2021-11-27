@@ -1,0 +1,19 @@
+name: Matrix Optional Test
+on: [push, workflow_dispatch]
+jobs:
+  test:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: Not specified
+          - name: Specified
+            skip-thing: true
+    name: Test ${{matrix.name}} (${{matrix.skip-thing}})
+    runs-on: ubuntu-latest
+    steps:
+      - name: Always ran
+        run: echo "Hello, world!"
+      - name: Sometimes ran
+        if: matrix.skip-thing != true
+        run: echo "Sometimes I'm skipped!"

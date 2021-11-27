@@ -1,5 +1,5 @@
 name: determine-rid Test
-on: [push, workflow_dispatch]
+on: [workflow_dispatch]
 jobs:
   test-unix:
     strategy:
