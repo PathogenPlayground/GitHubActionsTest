@@ -1,0 +1,33 @@
+name: macOS Clang Issue
+on: [push, workflow_dispatch]
+jobs:
+  test:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: ['macos-10.15', 'macos-11']
+    runs-on: ${{matrix.os}}
+    name: Test ${{matrix.os}}
+    steps:
+      - name: Create test file
+        run: |
+          echo "#include <cmath>" > test.cpp
+          echo "int main() { return (int)INFINITY; }" >> test.cpp
+      - name: Print environment info
+        if: always()
+        run: |
+          echo "========== SDK Path"
+          xcrun --show-sdk-path
+          echo "========== Selected Xcode Path"
+          xcode-select --print-path
+      - name: Build using macOS Clang
+        if: always()
+        run: |
+          which clang
+          clang -v test.cpp
+      - name: Build using Homebrew Clang
+        if: always()
+        run: |
+          PATH="$(brew --prefix llvm)/bin:$PATH"
+          which clang
+          clang -v test.cpp

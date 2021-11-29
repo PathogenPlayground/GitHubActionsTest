@@ -1,5 +1,5 @@
 name: Matrix Optional Test
-on: [push, workflow_dispatch]
+on: [workflow_dispatch]
 jobs:
   test:
     strategy:
