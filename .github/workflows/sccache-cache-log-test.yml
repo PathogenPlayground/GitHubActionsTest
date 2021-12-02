@@ -48,4 +48,4 @@ jobs:
         if: steps.cached-llvm.outputs.cache-hit != 'true' && always()
         run: |
           sccache --show-stats 2>&1 | tee ${{steps.sccache.outputs.root-directory}}/sccache-stats.txt
-          sccache --stop-server
+          #sccache --stop-server
