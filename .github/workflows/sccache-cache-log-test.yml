@@ -34,17 +34,28 @@ jobs:
         uses: actions/cache@v2
         # If you change this configuration make sure to update keep-cache-warm.yml as well.
         with:
+          # This doesn't work for some reason
+          # !${{steps.sccache.outputs.log-file-path}}
           path: |
             ${{steps.sccache.outputs.root-directory}}
-            !${{steps.sccache.outputs.log-file-path}}
           key: sccache-cache-${{github.run_number}}
 
       - name: Start sccache server
         if: steps.cached-llvm.outputs.cache-hit != 'true'
-        run: sccache --start-server
+        run: |
+          test -e "${{steps.sccache.outputs.log-file-path}}" && rm "${{steps.sccache.outputs.log-file-path}}" || true
+          sccache --start-server
 
       - name: Show sccache statistics
         if: steps.cached-llvm.outputs.cache-hit != 'true' && always()
         run: |
           sccache --show-stats 2>&1 | tee ${{steps.sccache.outputs.root-directory}}/sccache-stats.txt
-          #sccache --stop-server
+          sccache --stop-server
+
+      - name: Test delete thing
+        run:
+          touch b
+          test -e "a" && rm "a" || true
+          test -e "b" && rm "b" || true
+
+# verdict: The exclude is not working! Need to clear the log before we start the server
