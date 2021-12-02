@@ -36,7 +36,7 @@ jobs:
         with:
           path: |
             ${{steps.sccache.outputs.root-directory}}
-            '!${{steps.sccache.outputs.log-file-path}}'
+            !${{steps.sccache.outputs.log-file-path}}
           key: sccache-cache-${{github.run_number}}
 
       - name: Start sccache server
