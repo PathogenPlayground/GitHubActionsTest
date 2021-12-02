@@ -53,7 +53,7 @@ jobs:
           sccache --stop-server
 
       - name: Test delete thing
-        run:
+        run: |
           touch b
           test -e "a" && rm "a" || true
           test -e "b" && rm "b" || true
