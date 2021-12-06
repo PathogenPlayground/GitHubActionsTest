@@ -1,4 +1,4 @@
-name: Test friendly matrix names:
+name: Test friendly matrix names
 on: [push, workflow_dispatch]
 jobs:
   'Build Matrix':
