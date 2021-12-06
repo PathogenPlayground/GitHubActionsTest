@@ -9,9 +9,9 @@ jobs:
     runs-on: ubuntu-latest
     name: ${{matrix.name}}
     steps:
-      - runs: echo "Hello, world!"
+      - run: echo "Hello, world!"
   depends-on-build-matrix:
     needs: 'Build Matrix'
     runs-on: ubuntu-latest
     steps:
-      - runs: echo "Hello!"
+      - run: echo "Hello!"
