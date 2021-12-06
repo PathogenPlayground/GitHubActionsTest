@@ -1,7 +1,11 @@
+# Verdict 2021-12-06: Not allowed
 name: Test friendly matrix names
-on: [push, workflow_dispatch]
+on: [workflow_dispatch]
 jobs:
-  'Build Matrix':
+  # The workflow is not valid. .github/workflows/friendly-matrix-names.yml (Line: 4, Col: 3):
+  # The identifier 'Build Matrix' is invalid. IDs may only contain alphanumeric characters, '_', and '-'. IDs must start with a letter or '_' and and must be less than 100 characters.
+  #'Build Matrix':
+  build-matrix:
     strategy:
       fail-fast: false
       matrix:
@@ -11,7 +15,8 @@ jobs:
     steps:
       - run: echo "Hello, world!"
   depends-on-build-matrix:
-    needs: 'Build Matrix'
+    #needs: 'Build Matrix'
+    needs: build-matrix
     runs-on: ubuntu-latest
     steps:
       - run: echo "Hello!"
