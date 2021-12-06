@@ -4,6 +4,8 @@ jobs:
   test:
     # This does not work, very annoying they don't have any special syntax for "Just use a file in this repo"
     #uses: ${{github.repository}}/.github/workflows/subworkflow.yml@${{github.sha}}
-    uses: PathogenPlayground/GitHubActionsTest/.github/workflows/subworkflow.yml@${{github.sha}}
+    # This doesn't work either, seems expressions just aren't even allowed here.
+    #uses: PathogenPlayground/GitHubActionsTest/.github/workflows/subworkflow.yml@${{github.sha}}
+    uses: PathogenPlayground/GitHubActionsTest/.github/workflows/subworkflow.yml@main
     with:
       username: Path
