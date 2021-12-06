@@ -1,5 +1,14 @@
+# This tests having a "subworkflow" using reusable workflows
+# https://docs.github.com/en/actions/learn-github-actions/reusing-workflows
+# This doesn't really work how I'd like it to right now, but in the future it might:
+# https://github.community/t/ref-head-in-reusable-workflows/203690/4
+# ==========================
+# There's a second variant using composite actions instead
+# https://docs.github.com/en/actions/creating-actions/creating-a-composite-action
+# These aren't quite the same (they run as a step instead of as their own jobs) but for my purposes they seem fine
+# (I kinda forgot they existed since they were introduced after I originally learning GHA.)
 name: Subworkflow Test
-on: [push, workflow_dispatch]
+on: [workflow_dispatch]
 jobs:
   test:
     name: Main job thing
@@ -10,3 +19,13 @@ jobs:
     uses: PathogenPlayground/GitHubActionsTest/.github/workflows/subworkflow.yml@main
     with:
       username: Path
+  test2:
+    name: Test using composite action
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - id: foo
+        uses: ./.github/workflows/hello-world-composite-action
+        with:
+          who-to-greet: Path
+      - run: echo random-number ${{ steps.foo.outputs.random-number }}
