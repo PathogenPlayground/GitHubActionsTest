@@ -13,3 +13,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: echo Hello, ${{inputs.username}}
+  another_job:
+    name: Goodbye
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo Bye, ${{inputs.username}}
