@@ -1,0 +1,17 @@
+name: Test friendly matrix names:
+on: [push, workflow_dispatch]
+jobs:
+  'Build Matrix':
+    strategy:
+      fail-fast: false
+      matrix:
+        name: ['Windows x64', 'Linux x64', 'Linux ARM64']
+    runs-on: ubuntu-latest
+    name: ${{matrix.name}}
+    steps:
+      - runs: echo "Hello, world!"
+  depends-on-build-matrix:
+    needs: 'Build Matrix'
+    runs-on: ubuntu-latest
+    steps:
+        - runs: echo "Hello!"
