@@ -8,7 +8,7 @@
 # These aren't quite the same (they run as a step instead of as their own jobs) but for my purposes they seem fine
 # (I kinda forgot they existed since they were introduced after I originally learning GHA.)
 name: Subworkflow Test
-on: [workflow_dispatch]
+on: [push, workflow_dispatch]
 jobs:
   test:
     name: Main job thing
