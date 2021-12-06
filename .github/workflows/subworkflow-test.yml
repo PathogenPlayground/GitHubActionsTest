@@ -2,6 +2,8 @@ name: Subworkflow Test
 on: [push, workflow_dispatch]
 jobs:
   test:
-    uses: ${{github.repository}}/.github/workflows/subworkflow.yml@${{github.sha}}
+    # This does not work, very annoying they don't have any special syntax for "Just use a file in this repo"
+    #uses: ${{github.repository}}/.github/workflows/subworkflow.yml@${{github.sha}}
+    uses: PathogenPlayground/GitHubActionsTest/.github/workflows/subworkflow.yml@${{github.sha}}
     with:
       username: Path
