@@ -1,7 +1,7 @@
 # I encountered an issue where my sccache cache on Windows was failing due to the log file being locked by the sccache server
 # This tests my fix for it
 name: Test fix for sccache caching of log bug
-on: [push, workflow_dispatch]
+on: [workflow_dispatch]
 jobs:
   test:
     name: Test
