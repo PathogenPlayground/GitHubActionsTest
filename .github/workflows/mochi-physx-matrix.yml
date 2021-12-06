@@ -18,6 +18,9 @@ jobs:
         include:
           - rid: win-x64
             name: Windows x64
+            os: windows-latest
+            build-command: ./build.cmd
+            physx-install-path: external/PhysX/physx/install/Mochi.PhysX.Windows.x64/
     runs-on: ubuntu-latest
     steps:
       - name: Print info
