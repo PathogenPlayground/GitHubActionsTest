@@ -15,28 +15,6 @@ jobs:
             id: profile
           - name: Release
             id: release
-        include:
-          - name: Windows x64
-            rid: win-x64
-            os: windows-latest
-            build-command: ./build.cmd
-            physx-install-path: external/PhysX/physx/install/Mochi.PhysX.Windows.x64/
-          - name: Linux x64
-            rid: linux-x64
-            os: ubuntu-latest
-            rid: linux-x64
-            build-command: ./build.sh
-            physx-install-path: external/PhysX/physx/install/Mochi.PhysX.Linux.x64/
-          - name: Linux ARM64
-            rid: linux-arm64
-            os: ubuntu-arm64-latest
-            build-command: ./build.sh
-            physx-install-path: external/PhysX/physx/install/Mochi.PhysX.Linux.ARM64/
-          - name: macOS x64
-            rid: osx-x64
-            os: macos-10.15
-            build-command: ./build.sh
-            physx-install-path: external/PhysX/physx/install/Mochi.PhysX.macOS.x64/
     runs-on: ubuntu-latest
     steps:
       - name: Print info
