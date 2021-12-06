@@ -14,4 +14,4 @@ jobs:
     needs: 'Build Matrix'
     runs-on: ubuntu-latest
     steps:
-        - runs: echo "Hello!"
+      - runs: echo "Hello!"
