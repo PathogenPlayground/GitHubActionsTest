@@ -15,6 +15,9 @@ jobs:
             id: profile
           - name: Release
             id: release
+        include:
+          - rid: win-x64
+            name: Windows x64
     runs-on: ubuntu-latest
     steps:
       - name: Print info
