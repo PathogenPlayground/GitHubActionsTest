@@ -1,0 +1,7 @@
+name: Subworkflow Test
+on: [push, workflow_dispatch]
+jobs:
+  test:
+    uses: ${{github.repository}}/.github/workflows/subworkflow.yml@${{github.sha}}
+    with:
+      username: Path
