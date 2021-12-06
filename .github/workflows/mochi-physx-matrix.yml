@@ -21,6 +21,21 @@ jobs:
             os: windows-latest
             build-command: ./build.cmd
             physx-install-path: external/PhysX/physx/install/Mochi.PhysX.Windows.x64/
+          - rid: linux-x64
+            name: Linux x64
+            os: ubuntu-latest
+            build-command: ./build.sh
+            physx-install-path: external/PhysX/physx/install/Mochi.PhysX.Linux.x64/
+          - rid: linux-arm64
+            name: Linux ARM64
+            os: ubuntu-arm64-latest
+            build-command: ./build.sh
+            physx-install-path: external/PhysX/physx/install/Mochi.PhysX.Linux.ARM64/
+          - rid: osx-x64
+            name: macOS x64
+            os: macos-10.15
+            build-command: ./build.sh
+            physx-install-path: external/PhysX/physx/install/Mochi.PhysX.macOS.x64/
     runs-on: ubuntu-latest
     steps:
       - name: Print info
