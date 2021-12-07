@@ -7,8 +7,18 @@
 # https://docs.github.com/en/actions/creating-actions/creating-a-composite-action
 # These aren't quite the same (they run as a step instead of as their own jobs) but for my purposes they seem fine
 # (I kinda forgot they existed since they were introduced after I originally learning GHA.)
+#
+# Unfortunately I'm not a huge fan of this either
+# The UI for the steps within the composite action is spartan. Substeps all blur together and when one fails it's not presented in the same way.
+# It's workable but not super ideal for my use-case. I'd end up with a single step in each job which is not ideal.
+# It also seems to be a watered down version of the workflow syntax. (For instance naming steps doesn't work.)
+# -- Actualy naming steps supposedly should work, but doesn't appear anywhere from what I can see https://docs.github.com/en/actions/creating-actions/metadata-syntax-for-github-actions#runsstepsname
+# -- It's still a watered down version of the workflow syntax though.
+# I think it's probably best that we wait for local reusable workflows.
+# Sadly this isn't on the GitHub roadmap yet, so I'm not holding my breath on it.
+# In theory I just hard-code the owner/repo and `main` reference but that doesn't really jive well with my CI development workflow...
 name: Subworkflow Test
-on: [push, workflow_dispatch]
+on: [workflow_dispatch]
 jobs:
   test:
     name: Main job thing
