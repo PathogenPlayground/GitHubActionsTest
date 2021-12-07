@@ -1,0 +1,22 @@
+name: Test uploading different files to the same artifact from multiple jobs
+on: [push, workflow_dispatch]
+jobs:
+  test:
+    runs-on: windows-latest
+    steps:
+      - run: echo "Hello, world!" > hello.txt
+      - run: tar -cvf hello.tar hello.txt
+      - run: gzip hello.tar
+      - uses: actions/upload-artifact@v2
+        with:
+            path: hello.tar.gz
+  validate:
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - name: Download the artifact
+        uses: actions/download-artifact@v2
+      - name: Extract the tar and check
+        run: |
+          tar -xvf hello.tar.gz
+          cat hello.txt
