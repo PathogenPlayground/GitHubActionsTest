@@ -1,0 +1,30 @@
+name: Test uploading different files to the same artifact from multiple jobs
+on: [push, workflow_dispatch]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [8.x, 10.x, 12.x, 13.x]
+    steps:
+      - name: Create a file
+        run: echo ${{ matrix.node-version }} > my_file_${{ matrix.node-version }}.txt
+      - name: Upload different files to the same artifact via multiple jobs
+        uses: actions/upload-artifact@v2
+        with:
+            name: my-artifact
+            path: ${{ github.workspace }}
+  validate:
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - name: Download the artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: my-artifact
+      - name: Check all the files are there
+        run: |
+          cat my_file_8.x.txt
+          cat my_file_10.x.txt
+          cat my_file_12.x.txt
+          cat my_file_13.x.txt
