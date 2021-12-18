@@ -1,11 +1,11 @@
 name: Upload release assets Mochi.PhysX test
-on: [push, workflow_dispatch]
+on: [release]
 jobs:
   publish-release-assets:
     name: Publish Release Assets
     runs-on: ubuntu-latest
     #needs: build-mochi-physx
-    #if: github.event_name == 'release'
+    if: github.event_name == 'release'
     steps:
       # ----------------------------------------------------------------------- Download all artifacts
       - name: Download artifacts
@@ -22,11 +22,11 @@ jobs:
           script: |
             const fs = require('fs').promises;
             const path = require('path');
-            //const uploadUrl = context.payload.release.upload_url;
-            //
-            //if (!uploadUrl) {
-            //  throw "Missing release asset upload URL!";
-            //}
+            const uploadUrl = context.payload.release.upload_url;
+            
+            if (!uploadUrl) {
+              throw "Missing release asset upload URL!";
+            }
 
             async function uploadAssets(directoryPath) {
               for (let filePath of await fs.readdir(directoryPath)) {
@@ -40,15 +40,15 @@ jobs:
                 }
 
                 console.log(`Uploading '${filePath}'`);
-                //await github.repos.uploadReleaseAsset({
-                //  url: uploadUrl,
-                //  headers: {
-                //    'content-type': 'application/octet-stream',
-                //    'content-length': stats.size
-                //  },
-                //  name: path.basename(filePath),
-                //  data: await fs.readFile(filePath)
-                //});
+                await github.repos.uploadReleaseAsset({
+                  url: uploadUrl,
+                  headers: {
+                    'content-type': 'application/octet-stream',
+                    'content-length': stats.size
+                  },
+                  name: path.basename(filePath),
+                  data: await fs.readFile(filePath)
+                });
               }
             }
 
