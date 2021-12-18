@@ -1,5 +1,5 @@
 name: Test uploading different files to the same artifact from multiple jobs
-on: [push, workflow_dispatch]
+on: [workflow_dispatch]
 jobs:
   test:
     runs-on: windows-latest
