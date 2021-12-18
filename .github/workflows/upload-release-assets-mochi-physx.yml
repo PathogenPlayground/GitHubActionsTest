@@ -28,14 +28,14 @@ jobs:
             //  throw "Missing release asset upload URL!";
             //}
 
-            function uploadAssets(directoryPath) {
+            async function uploadAssets(directoryPath) {
               for (let filePath of await fs.readdir(directoryPath)) {
                 filePath = path.join(directoryPath, filePath);
                 const stats = await fs.stat(filePath);
 
                 if (stats.isDirectory()) {
-                  console.log(`Entering directory '${filePath}'`);
-                  uploadAssets(filePath);
+                  console.log(`Entering '${filePath}'`);
+                  await uploadAssets(filePath);
                   continue;
                 }
 
@@ -52,4 +52,4 @@ jobs:
               }
             }
 
-            uploadAssets('.');
+            await uploadAssets('.');
