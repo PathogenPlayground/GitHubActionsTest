@@ -1,5 +1,7 @@
 name: Upload release assets Mochi.PhysX test
-on: [release]
+on:
+  release:
+    types: [published]
 jobs:
   publish-release-assets:
     name: Publish Release Assets
@@ -19,6 +21,8 @@ jobs:
         uses: actions/github-script@v4
         with:
           user-agent: actions/github-script for ${{github.repository}}
+          # Note: The DEP0005 warning is coming from an Octokit dependency. Not our fault.
+          # See https://github.com/actions/github-script/issues/202
           script: |
             const fs = require('fs').promises;
             const path = require('path');
