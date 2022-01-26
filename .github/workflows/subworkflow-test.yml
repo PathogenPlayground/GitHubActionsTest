@@ -2,6 +2,7 @@
 # https://docs.github.com/en/actions/learn-github-actions/reusing-workflows
 # This doesn't really work how I'd like it to right now, but in the future it might:
 # https://github.community/t/ref-head-in-reusable-workflows/203690/4
+# -- Edit: Work's how I'd hope now! https://github.blog/changelog/2022-01-25-github-actions-reusable-workflows-can-be-referenced-locally/
 # ==========================
 # There's a second variant using composite actions instead
 # https://docs.github.com/en/actions/creating-actions/creating-a-composite-action
@@ -26,7 +27,9 @@ jobs:
     #uses: ${{github.repository}}/.github/workflows/subworkflow.yml@${{github.sha}}
     # This doesn't work either, seems expressions just aren't even allowed here.
     #uses: PathogenPlayground/GitHubActionsTest/.github/workflows/subworkflow.yml@${{github.sha}}
-    uses: PathogenPlayground/GitHubActionsTest/.github/workflows/subworkflow.yml@main
+    #uses: PathogenPlayground/GitHubActionsTest/.github/workflows/subworkflow.yml@main
+    # Just released! https://github.blog/changelog/2022-01-25-github-actions-reusable-workflows-can-be-referenced-locally/
+    uses: ./.github/workflows/subworkflow.yml
     with:
       username: Path
   test2:
