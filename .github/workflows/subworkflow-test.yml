@@ -32,13 +32,13 @@ jobs:
     uses: ./.github/workflows/subworkflow.yml
     with:
       username: Path
-  test2:
-    name: Test using composite action
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - id: foo
-        uses: ./.github/workflows/hello-world-composite-action
-        with:
-          who-to-greet: Path
-      - run: echo random-number ${{ steps.foo.outputs.random-number }}
+#  test2:
+#    name: Test using composite action
+#    runs-on: ubuntu-latest
+#    steps:
+#      - uses: actions/checkout@v2
+#      - id: foo
+#        uses: ./.github/workflows/hello-world-composite-action
+#        with:
+#          who-to-greet: Path
+#      - run: echo random-number ${{ steps.foo.outputs.random-number }}
