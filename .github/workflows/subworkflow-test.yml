@@ -29,7 +29,8 @@ jobs:
     #uses: PathogenPlayground/GitHubActionsTest/.github/workflows/subworkflow.yml@${{github.sha}}
     #uses: PathogenPlayground/GitHubActionsTest/.github/workflows/subworkflow.yml@main
     # Just released! https://github.blog/changelog/2022-01-25-github-actions-reusable-workflows-can-be-referenced-locally/
-    uses: ./.github/workflows/subworkflow.yml
+    #uses: ./.github/workflows/subworkflow.yml
+    uses: ./subworkflow.yml
     with:
       username: Path
 #  test2:
