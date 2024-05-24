@@ -1,0 +1,15 @@
+name: Missing working directory
+on: [workflow_dispatch]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    name: Test
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - run: ls -l
+      - run: ls -l
+        working-directory: GitHubActionsTest
+      - run: ls -l
+        working-directory: doesnotexist
+      - run: ls -l
