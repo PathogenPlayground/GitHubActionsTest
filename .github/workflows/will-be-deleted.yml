@@ -1,0 +1,7 @@
+name: AAAAA - Will be deleted
+on: [workflow_dispatch]
+jobs:
+  whoami:
+    runs-on: ubuntu-latest
+    steps:
+    - run: echo "Hello, world!"
