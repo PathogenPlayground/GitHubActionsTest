@@ -1,7 +1,0 @@
-name: AAAAA - Will be deleted 2 (Don't run!)
-on: [workflow_dispatch]
-jobs:
-  whoami:
-    runs-on: ubuntu-latest
-    steps:
-    - run: echo "Hello, world!"
