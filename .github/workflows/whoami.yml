@@ -12,9 +12,13 @@ jobs:
       run: ls -la /home/runner
     - name: Look around more...
       run: ls -la /home/runner/runners
+    - name: Look where I started...
+      run: ls -la
+    - name: Workspace is?
+      run: echo $GITHUB_WORKSPACE
     - name: What is the work folder configured as?
-      run: cat /home/runner/runners/2.282.1/.runner
+      run: cat /home/runner/runners/2.317.1/.runner
     - name: Print setup info
-      run: cat /home/runner/runners/2.282.1/.setup_info
+      run: cat /home/runner/runners/2.317.1/.setup_info
     - name: Look around even more...
       run: ps aux
