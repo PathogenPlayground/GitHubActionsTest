@@ -4,7 +4,7 @@ import os
 
 import gha
 
-matrix = { }
+matrix = [ ]
 
 def add(name: str, runner_os: str, rid: str, configurations: list[str] = ['Debug', 'Release']):
     platform = {
@@ -29,7 +29,7 @@ windows['Release']['create-installer'] = True
 
 # Build dummy packages to determine which ones changed
 def add_dummy(name: str):
-    dummy = add(name, 'ubuntu-latest', 'linux-x64', 'Release')['Release']
+    dummy = add(name, 'ubuntu-latest', 'linux-x64', ['Release'])['Release']
     dummy['skip-tests'] = True
     dummy['dummy-build'] = True
 
@@ -37,7 +37,8 @@ add_dummy('Previous Dummy')
 add_dummy('Next Dummy')
 
 # Output
-print(json.dump(matrix))
-gha.set_output('matrix', json.dump(matrix))
+matrix_json = json.dumps(matrix, indent=2)
+print(matrix_json)
+gha.set_output('matrix', matrix_json)
 
 gha.fail_if_errors()
