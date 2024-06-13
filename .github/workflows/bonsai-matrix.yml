@@ -1,0 +1,48 @@
+name: Bonsai Matrix Test
+on:
+  workflow_dispatch:
+jobs:
+  build-and-test:
+    strategy:
+      fail-fast: false
+      matrix:
+        platform:
+          - name: Windows x64
+            os: windows-latest
+            rid: win-x64
+          - name: Linux x64
+            os: ubuntu-latest
+            rid: linux-x64
+        configuration: ['Debug', 'Release']
+        include:
+          # Create packages and installer from Windows Release x64
+          - platform:
+              rid: win-x64
+            configuration: Release
+            create-packages: true
+            create-installer: true
+          # Build dummy packages to determine which changed
+          - platform:
+              name: Previous Version
+              os: ubuntu-latest
+              rid: linux-x64
+              skip-tests: true
+            configuration: Release
+          - platform:
+              name: Next Version
+              os: ubuntu-latest
+              rid: linux-x64
+              skip-tests: true
+            configuration: Release
+    name: ${{matrix.platform.name}} ${{matrix.configuration}}
+    runs-on: ${{matrix.platform.os}}
+    steps:
+      - name: Pack
+        id: pack
+        if: matrix.create-packages
+        run: echo dotnet pack --no-build --configuration ${{matrix.configuration}}
+
+      # ----------------------------------------------------------------------- Test
+      - name: Test
+        if: !matrix.skip-tests
+        run: echo dotnet test --no-restore --no-builds --configuration ${{matrix.configuration}} --verbosity normal
