@@ -16,9 +16,15 @@ jobs:
       run: ls -la
     - name: Workspace is?
       run: echo $GITHUB_WORKSPACE
-    - name: What is the work folder configured as?
-      run: cat /home/runner/runners/2.317.1/.runner
-    - name: Print setup info
-      run: cat /home/runner/runners/2.317.1/.setup_info
+    - name: Checkout
+      uses: actions/checkout@v2.3.4
+    - name: Look where I started again...
+      run: ls -la
+    - name: Where am I?
+      run: pwd
+    #- name: What is the work folder configured as?
+    #  run: cat /home/runner/runners/2.317.1/.runner
+    #- name: Print setup info
+    #  run: cat /home/runner/runners/2.317.1/.setup_info
     - name: Look around even more...
       run: ps aux
