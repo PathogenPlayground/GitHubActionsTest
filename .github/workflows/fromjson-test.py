@@ -5,16 +5,24 @@ import gha
 
 matrix = [
     {
-        'project': 'foo',
-        'config': 'Debug',
-        'composite': {
-            'lol': 'lel'
-        }
+        "platform": {
+            "name": "Windows x64",
+            "os": "windows-latest",
+            "rid": "win-x64"
+        },
+        "configuration": "Debug"
     },
-    {
-        'project': 'bar',
-        'config': 'Release'
-    },
+    #{
+    #    'project': 'foo',
+    #    'config': 'Debug',
+    #    'composite': {
+    #        'lol': 'lel'
+    #    }
+    #},
+    #{
+    #    'project': 'bar',
+    #    'config': 'Release'
+    #},
 ]
 
 #gha.set_output('matrix', '{"include":[{"project":"foo","config":"Debug"},\n{"project":"bar","config":"Release"}]}')
