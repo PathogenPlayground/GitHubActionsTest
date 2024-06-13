@@ -1,6 +1,7 @@
 name: Bonsai Matrix Test
 on:
   workflow_dispatch:
+  pull_request:
 jobs:
   build-and-test:
     strategy:
@@ -23,19 +24,23 @@ jobs:
             create-installer: true
           # Build dummy packages to determine which changed
           - platform:
-              name: Previous Version
+              name: Previous Dummy
               os: ubuntu-latest
               rid: linux-x64
             skip-tests: true
+            dummy-build: true
             configuration: Release
           - platform:
-              name: Next Version
+              name: Next Dummy
               os: ubuntu-latest
               rid: linux-x64
             skip-tests: true
+            dummy-build: true
             configuration: Release
     name: ${{matrix.platform.name}} ${{matrix.configuration}}
     runs-on: ${{matrix.platform.os}}
+    # Do not bother with dummy builds for pull requests
+    if: github.event_name != 'pull_request' || !matrix.dummy-build
     steps:
       - name: Pack
         id: pack
