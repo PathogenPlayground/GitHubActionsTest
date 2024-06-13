@@ -40,7 +40,7 @@ jobs:
     name: ${{matrix.platform.name}} ${{matrix.configuration}}
     runs-on: ${{matrix.platform.os}}
     # Do not bother with dummy builds for pull requests
-    if: github.event_name != 'pull_request' || matrix.dummy-build != true
+    if: ${{github.event_name}} != 'pull_request' || ${{!matrix.dummy-build}}
     steps:
       - name: Pack
         id: pack
