@@ -27,15 +27,16 @@ linux = add('Linux x64', 'ubuntu-latest', 'linux-x64')
 windows['Release']['create-packages'] = True
 windows['Release']['create-installer'] = True
 
-# Build dummy packages to determine which ones changed
+# Build dummy packages to determine which ones changed (not relevant for pull requests since we won't publish)
 def add_dummy(name: str):
     dummy = add(name, 'ubuntu-latest', 'linux-x64', ['Release'])['Release']
     dummy['skip-tests'] = True
     dummy['create-packages'] = True
     dummy['dummy-build'] = True
 
-add_dummy('Previous Dummy')
-add_dummy('Next Dummy')
+if os.getenv('GITHUB_EVENT_NAME') != 'pull_request':
+    add_dummy('Previous Dummy')
+    add_dummy('Next Dummy')
 
 # Output
 matrix_json = json.dumps({ "include": matrix }, indent=2)
