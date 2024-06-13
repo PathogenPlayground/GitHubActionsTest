@@ -44,5 +44,5 @@ jobs:
 
       # ----------------------------------------------------------------------- Test
       - name: Test
-        if: !matrix.skip-tests
+        if: ${{!matrix.skip-tests}}
         run: echo dotnet test --no-restore --no-builds --configuration ${{matrix.configuration}} --verbosity normal
