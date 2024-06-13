@@ -40,7 +40,7 @@ jobs:
     name: ${{matrix.platform.name}} ${{matrix.configuration}}
     runs-on: ${{matrix.platform.os}}
     # Do not bother with dummy builds for pull requests
-    if: github.event_name != 'pull_request' || !matrix.dummy-build
+    if: github.event_name != 'pull_request' || matrix.dummy-build != true
     steps:
       - name: Pack
         id: pack
@@ -49,5 +49,5 @@ jobs:
 
       # ----------------------------------------------------------------------- Test
       - name: Test
-        if: ${{!matrix.skip-tests}}
+        if: matrix.skip-tests != true
         run: echo dotnet test --no-restore --no-builds --configuration ${{matrix.configuration}} --verbosity normal
