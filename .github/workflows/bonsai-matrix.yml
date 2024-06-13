@@ -37,10 +37,11 @@ jobs:
             skip-tests: true
             dummy-build: true
             configuration: Release
+        exclude:
+          # Skip dummy builds for PRs
+          - dummy-build: ${{ github.event_name == 'pull_request' && true }}
     name: ${{matrix.platform.name}} ${{matrix.configuration}}
     runs-on: ${{matrix.platform.os}}
-    # Do not bother with dummy builds for pull requests
-    if: ${{github.event_name}} != 'pull_request' || ${{!matrix.dummy-build}}
     steps:
       - name: Pack
         id: pack
