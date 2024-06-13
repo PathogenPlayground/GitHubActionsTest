@@ -25,13 +25,13 @@ jobs:
     steps:
       - run: echo $MATRIX
         env:
-          MATRIX: ${{needs.create-build-matrix.outputs.matrix}}
+          MATRIX: ${{fromJSON(needs.create-build-matrix.outputs.matrix)}}
     
   build-and-test:
     needs: create-build-matrix
     strategy:
       fail-fast: false
-      matrix: ${{fromJson(needs.create-build-matrix.outputs.matrix)}}
+      matrix: ${{fromJSON(needs.create-build-matrix.outputs.matrix)}}
     name: ${{matrix.platform.name}} ${{matrix.configuration}}
     runs-on: ${{matrix.platform.os}}
     steps:

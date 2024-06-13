@@ -37,7 +37,7 @@ add_dummy('Previous Dummy')
 add_dummy('Next Dummy')
 
 # Output
-matrix_json = json.dumps(matrix, indent=2)
+matrix_json = json.dumps({ "include": matrix }, indent=2)
 print(matrix_json)
 gha.set_output('matrix', matrix_json)
 
