@@ -3,43 +3,27 @@ on:
   workflow_dispatch:
   pull_request:
 jobs:
+  create-build-matrix:
+    name: Create Build Matrix
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: steps.create-matrix.outputs.matrix
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Python 3.10
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - name: Create Build Matrix
+        id: create-matrix
+        run: python .github/workflows/bonsai-matrix-build.py
+    
   build-and-test:
+    needs: create-build-matrix
     strategy:
       fail-fast: false
-      matrix:
-        platform:
-          - name: Windows x64
-            os: windows-latest
-            rid: win-x64
-          - name: Linux x64
-            os: ubuntu-latest
-            rid: linux-x64
-        configuration: ['Debug', 'Release']
-        include:
-          # Create packages and installer from Windows Release x64
-          - platform:
-              rid: win-x64
-            configuration: Release
-            create-packages: true
-            create-installer: true
-          # Build dummy packages to determine which changed
-          - platform:
-              name: Previous Dummy
-              os: ubuntu-latest
-              rid: linux-x64
-            skip-tests: true
-            dummy-build: true
-            configuration: Release
-          - platform:
-              name: Next Dummy
-              os: ubuntu-latest
-              rid: linux-x64
-            skip-tests: true
-            dummy-build: true
-            configuration: Release
-        exclude:
-          # Skip dummy builds for PRs
-          - dummy-build: ${{ github.event_name == 'pull_request' && true }}
+      matrix: fromJson(needs.create-build-matrix.outputs.matrix)
     name: ${{matrix.platform.name}} ${{matrix.configuration}}
     runs-on: ${{matrix.platform.os}}
     steps:

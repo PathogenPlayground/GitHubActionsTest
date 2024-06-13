@@ -18,10 +18,8 @@ def print_error(message):
 def print_warning(message):
     print(f"::warning::{message}", file=sys.stderr)
 
-def set_output(name, value):
-    if isinstance(value, bool):
-        value = "true" if value else "false"
-    print(f"::set-output name={name}::{value}")
+def print_notice(message):
+    print(f"::notice::{message}", file=sys.stderr)
 
 def github_file_command(command, message):
     command = f"GITHUB_{command}"
@@ -39,8 +37,64 @@ def github_file_command(command, message):
         command_file_handle.write(message)
         command_file_handle.write('\n')
 
+def set_output(name, value):
+    if isinstance(value, bool):
+        value = "true" if value else "false"
+    github_file_command("OUTPUT", f"{name}<<GHA_PY_EOF\n{value}\nGHA_PY_EOF")
+
 def set_environment_variable(name, value):
     github_file_command("ENV", f"{name}={value}")
 
 def add_path(path):
     github_file_command("PATH", path)
+
+if __name__ == "__main__":
+    args = sys.argv
+
+    def pop_arg():
+        global args
+        if len(args) == 0:
+            print_error("Bad command line, not enough arguments specified.")
+            sys.exit(1)
+        result = args[0]
+        args = args[1:]
+        return result
+    
+    def done_parsing():
+        if len(args) > 0:
+            print_error("Bad command line, too many arguments specified.")
+            sys.exit(1)
+    
+    pop_arg() # Skip script name
+    command = pop_arg()
+    if command == "print_error":
+        message = pop_arg()
+        done_parsing()
+        print_error(message)
+    elif command == "print_warning":
+        message = pop_arg()
+        done_parsing()
+        print_warning(message)
+    elif command == "print_notice":
+        message = pop_arg()
+        done_parsing()
+        print_notice(message)
+    elif command == "set_output":
+        name = pop_arg()
+        value = pop_arg()
+        done_parsing()
+        set_output(name, value)
+    elif command == "set_environment_variable":
+        name = pop_arg()
+        value = pop_arg()
+        done_parsing()
+        set_environment_variable(name, value)
+    elif command == "add_path":
+        path = pop_arg()
+        done_parsing()
+        add_path(path)
+    else:
+        print_error(f"Unknown command '{command}'")
+        sys.exit(1)
+    
+    fail_if_errors()
