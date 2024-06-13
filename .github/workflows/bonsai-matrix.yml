@@ -8,7 +8,7 @@ jobs:
     name: Create Build Matrix
     runs-on: ubuntu-latest
     outputs:
-      matrix: steps.create_matrix.outputs.matrix
+      matrix: ${{ steps.create_matrix.outputs.matrix }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
