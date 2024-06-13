@@ -4,3 +4,6 @@ jobs:
     runs-on: windows-latest
     steps:
       - run: vswhere
+      - run: |
+        $devenv = vswhere -latest -property productPath
+        $devenv /?
