@@ -6,7 +6,10 @@ import gha
 matrix = [
     {
         'project': 'foo',
-        'config': 'Debug'
+        'config': 'Debug',
+        'composite': {
+            'lol': 'lel'
+        }
     },
     {
         'project': 'bar',
