@@ -6,4 +6,4 @@ jobs:
       - run: vswhere
       - run: |
           $devenv = vswhere -latest -property productPath
-          $devenv /?
+          & $devenv /?
