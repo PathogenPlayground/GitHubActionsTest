@@ -15,7 +15,8 @@ jobs:
           python-version: '3.10'
       - id: set-matrix
         #run: echo "matrix={\"include\":[{\"project\":\"foo\",\"config\":\"Debug\"},{\"project\":\"bar\",\"config\":\"Release\"}]}" >> $GITHUB_OUTPUT
-        run: python .github/workflows/fromjson-test.py
+        #run: python .github/workflows/fromjson-test.py
+        run: python .github/workflows/bonsai-matrix-build.py
   job2:
     needs: job1
     runs-on: ubuntu-latest
