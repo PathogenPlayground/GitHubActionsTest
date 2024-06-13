@@ -1,0 +1,6 @@
+on: [workflow_dispatch]
+jobs:
+  vswhere:
+    runs-on: windows-latest
+    steps:
+      - run: vswhere
