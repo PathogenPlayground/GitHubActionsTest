@@ -30,3 +30,5 @@ jobs:
     #  run: cat /home/runner/runners/2.317.1/.setup_info
     - name: Look around even more...
       run: ps aux
+    - name: env
+      run: env

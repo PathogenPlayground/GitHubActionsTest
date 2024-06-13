@@ -1,14 +1,14 @@
 name: Bonsai Matrix Test
 on:
-  push:
+  #push:
   workflow_dispatch:
   pull_request:
 jobs:
-  create_build_matrix:
+  create-build-matrix:
     name: Create Build Matrix
     runs-on: ubuntu-latest
     outputs:
-      matrix: ${{ steps.create_matrix.outputs.matrix }}
+      matrix: ${{steps.create_matrix.outputs.matrix}}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -19,20 +19,12 @@ jobs:
       - name: Create Build Matrix
         id: create_matrix
         run: python .github/workflows/bonsai-matrix-build.py
-
-#  print-matrix-json:
-#    needs: create_build_matrix
-#    runs-on: ubuntu-latest
-#    steps:
-#      - run: echo $MATRIX
-#        env:
-#          MATRIX: ${{fromJSON(needs.create_build_matrix.outputs.matrix)}}
     
   build-and-test:
-    needs: create_build_matrix
+    needs: create-build-matrix
     strategy:
       fail-fast: false
-      matrix: ${{ fromJSON(needs.create_build_matrix.outputs.matrix) }}
+      matrix: ${{fromJSON(needs.create-build-matrix.outputs.matrix)}}
     name: ${{matrix.platform.name}} ${{matrix.configuration}}
     runs-on: ${{matrix.platform.os}}
     steps:

@@ -31,6 +31,7 @@ windows['Release']['create-installer'] = True
 def add_dummy(name: str):
     dummy = add(name, 'ubuntu-latest', 'linux-x64', ['Release'])['Release']
     dummy['skip-tests'] = True
+    dummy['create-packages'] = True
     dummy['dummy-build'] = True
 
 add_dummy('Previous Dummy')
