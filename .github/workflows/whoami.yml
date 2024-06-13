@@ -17,7 +17,9 @@ jobs:
     - name: Workspace is?
       run: echo $GITHUB_WORKSPACE
     - name: Checkout
-      uses: actions/checkout@v2.3.4
+      uses: actions/checkout@v4
+      with:
+        path: 'heck'
     - name: Look where I started again...
       run: ls -la
     - name: Where am I?
