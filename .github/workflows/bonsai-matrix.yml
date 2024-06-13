@@ -26,13 +26,13 @@ jobs:
               name: Previous Version
               os: ubuntu-latest
               rid: linux-x64
-              skip-tests: true
+            skip-tests: true
             configuration: Release
           - platform:
               name: Next Version
               os: ubuntu-latest
               rid: linux-x64
-              skip-tests: true
+            skip-tests: true
             configuration: Release
     name: ${{matrix.platform.name}} ${{matrix.configuration}}
     runs-on: ${{matrix.platform.os}}
