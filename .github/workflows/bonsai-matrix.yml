@@ -18,6 +18,14 @@ jobs:
       - name: Create Build Matrix
         id: create-matrix
         run: python .github/workflows/bonsai-matrix-build.py
+
+  print-matrix-json:
+    needs: create-build-matrix
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo $MATRIX
+        env:
+          MATRIX: ${{needs.create-build-matrix.outputs.matrix}}
     
   build-and-test:
     needs: create-build-matrix
