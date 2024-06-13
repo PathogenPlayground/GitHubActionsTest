@@ -32,7 +32,7 @@ jobs:
     needs: create_build_matrix
     strategy:
       fail-fast: false
-      matrix: ${{fromJSON(needs.create_build_matrix.outputs.matrix)}}
+      matrix: ${{ fromJSON(needs.create_build_matrix.outputs.matrix) }}
     name: ${{matrix.platform.name}} ${{matrix.configuration}}
     runs-on: ${{matrix.platform.os}}
     steps:
