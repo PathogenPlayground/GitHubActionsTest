@@ -5,5 +5,5 @@ jobs:
     steps:
       - run: vswhere
       - run: |
-          $devenv = vswhere -latest -property productPath
+          $devenv = vswhere -find Common7\IDE\devenv.com
           & $devenv /?
