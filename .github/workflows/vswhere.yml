@@ -6,4 +6,5 @@ jobs:
       - run: vswhere
       - run: |
           $devenv = vswhere -find Common7\IDE\devenv.com
+          echo $devenv
           & $devenv /?
