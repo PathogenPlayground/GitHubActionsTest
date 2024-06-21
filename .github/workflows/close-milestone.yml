@@ -16,7 +16,7 @@ jobs:
         with:
           user-agent: actions/github-script for ${{github.repository}}
           script: |
-            core.info(context.payload);
+            core.info(JSON.stringify(context.payload));
             const milestoneToClose = context.payload.workflow_dispatch.inputs.milestone;
 
             milestones = github.issues.listMilestones({
