@@ -18,12 +18,14 @@ jobs:
           script: |
             const milestoneToClose = context.payload.inputs.milestone;
 
-            milestones = github.rest.issues.listMilestones({
+            cfg = {
               owner: context.repo.owner,
               repo: context.repo.repo,
               state: 'open',
               per_page: 100,
-            });
+            };
+            core.info(JSON.stringify(cfg));
+            milestones = github.rest.issues.listMilestones(cfg);
 
             core.info(JSON.stringify(milestones));
 
