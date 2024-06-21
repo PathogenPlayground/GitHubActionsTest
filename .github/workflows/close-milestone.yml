@@ -23,7 +23,7 @@ jobs:
               repo: context.repo.repo,
               state: 'open',
               per_page: 100,
-            }));
+            });
             milestones = response.data;
 
             core.info(JSON.stringify(milestones));
