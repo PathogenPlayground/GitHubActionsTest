@@ -1,0 +1,9 @@
+name: Variable test
+on:
+  push:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Test
+      run: echo ${{vars.TEST_VARIABLE}}
