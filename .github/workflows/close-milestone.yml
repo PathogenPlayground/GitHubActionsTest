@@ -25,6 +25,8 @@ jobs:
               per_page: 100,
             });
 
+            core.info(JSON.stringify(milestones));
+
             for (let milestone of milestones) {
               if (milestone.title != milestoneToClose) {
                 continue;
