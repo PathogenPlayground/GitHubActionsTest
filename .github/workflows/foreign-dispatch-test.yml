@@ -1,0 +1,13 @@
+name: Foreign dispatch test
+on:
+  push:
+  workflow_dispatch:
+jobs:
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Dispatch
+        run: gh workflow run test.yml --raw-field project="Some Project" --raw-field version="1.2.3" --repo:PathogenPlayground/GitHubActionsTest2
+        env:
+          GH_TOKEN: ${{github.token}}
