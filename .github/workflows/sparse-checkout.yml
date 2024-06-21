@@ -18,3 +18,4 @@ jobs:
         with:
           sparse-checkout: .github
           sparse-checkout-cone-mode: ${{matrix.platform.cone-mode}}
+      - run: ls -laR
