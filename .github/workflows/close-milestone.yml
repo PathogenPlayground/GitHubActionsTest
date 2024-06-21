@@ -2,7 +2,7 @@ name: Close milestone
 on:
   workflow_dispatch:
     inputs:
-      milstone:
+      milestone:
         description: "Milestone"
         default: "1.2.3"
 permissions:
@@ -14,14 +14,11 @@ jobs:
       - name: Close milestone
         uses: actions/github-script@v7
         env:
-          LMAO: lel
+          MILESTONE_NAME: ${{github.event.inputs.milestone}}
         with:
           user-agent: actions/github-script for ${{github.repository}}
-          whatever: lol
           script: |
-            const milestoneToClose = context.payload.inputs.milestone;
-            core.info(JSON.stringify(context.payload.inputs));
-            core.info(process.env.LMAO);
+            const milestoneToClose = process.env.MILESTONE_NAME;
 
             response = await github.rest.issues.listMilestones({
               owner: context.repo.owner,
