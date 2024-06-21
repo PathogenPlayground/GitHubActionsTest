@@ -13,10 +13,15 @@ jobs:
     steps:
       - name: Close milestone
         uses: actions/github-script@v7
+        env:
+          LMAO: lel
         with:
           user-agent: actions/github-script for ${{github.repository}}
+          whatever: lol
           script: |
             const milestoneToClose = context.payload.inputs.milestone;
+            core.info(JSON.stringify(context.payload.inputs));
+            core.info(process.env.LMAO);
 
             response = await github.rest.issues.listMilestones({
               owner: context.repo.owner,
@@ -44,6 +49,6 @@ jobs:
               return;
             }
 
-            core.warning(`Could not find any milestone associated with '${milestoneToClose}', the milestone for this release will not be closed.`)
+            core.warning(`Could not find any milestone associated with '${milestoneToClose}', the milestone for this release will not be closed.`);
 
     
