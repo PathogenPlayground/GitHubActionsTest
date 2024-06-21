@@ -1,0 +1,20 @@
+name: Sparse Checkout
+on:
+  push
+jobs:
+  run:
+    strategy:
+      fail-fast: false
+      matrix:
+        platform:
+          - name: cone-mode=true
+            cone-mode: true
+          - name: cone-mode=false
+            cone-mode: false
+    name: ${{matrix.platform.name}}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: .github
+          sparse-checkout-cone-mode: ${{matrix.platform.cone-mode}}
