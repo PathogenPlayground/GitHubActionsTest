@@ -10,4 +10,4 @@ jobs:
       - name: Dispatch
         run: gh workflow run test.yml --raw-field project="Some Project" --raw-field version="1.2.3" --repo PathogenPlayground/GitHubActionsTest2
         env:
-          GH_TOKEN: ${{github.token}}
+          GH_TOKEN: ${{secrets.GITHUBACTIONSTEST2_TOKEN}}
