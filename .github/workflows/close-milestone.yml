@@ -28,8 +28,6 @@ jobs:
             });
             milestones = response.data;
 
-            core.info(JSON.stringify(milestones));
-
             for (let milestone of milestones) {
               if (milestone.title != milestoneToClose) {
                 continue;
