@@ -16,14 +16,14 @@ jobs:
       - name: TEST
         run: git rev-parse refs/heads/main
       # We can't bump the version number unless the release happened at `main`
-      - name: Get the revision of `main`
+      - name: Get the revision of main branch
         id: main-revision
         run: python .github/workflows/gha.py set_output sha `git rev-parse refs/heads/main`
 
       # ----------------------------------------------------------------------- Bump version number
       - name: Warn if it doesn't match the release
         if: steps.main-revision.outputs.sha != github.sha
-        run: python .github/workflows/gha.py print_warning "The `main` branch is at ${{steps.main-revision.outputs.sha}} but the release was made from ${{github.sha}}, the version number will not be automatically bumped."
+        run: python .github/workflows/gha.py print_warning "The main branch is at ${{steps.main-revision.outputs.sha}} but the release was made from ${{github.sha}}, the version number will not be automatically bumped."
 
       - name: PRINT
         run: |
@@ -31,5 +31,5 @@ jobs:
           echo "MAIN REV: '$MAIN_SHA'"
         env:
           CURRENT_SHA: ${{github.sha}}
-          MAIN_SHA: ${{steps.main_revision.outputs.sha}}
+          MAIN_SHA: ${{steps.main-revision.outputs.sha}}
 
