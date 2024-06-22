@@ -1,0 +1,33 @@
+name: Release bump check
+on:
+  workflow_dispatch:
+jobs:
+  finish-up-release:
+    name: Finish up release
+    runs-on: ubuntu-latest
+    steps:
+      # ----------------------------------------------------------------------- Checkout
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: refs/heads/main
+
+      # ----------------------------------------------------------------------- Get the revision of `main`
+      # We can't bump the version number unless the release happened at `main`
+      - name: Get the revision of `main`
+        id: main_revision
+        run: python .github/workflows/gha.py set_output sha `git rev-parse refs/heads/main`
+
+      # ----------------------------------------------------------------------- Bump version number
+      - name: Warn if it doesn't match the release
+        if: steps.main_revision.sha != github.sha
+        run: python .github/workflows/gha.py print_warning "The `main` branch is at ${{steps.main_revision.sha}} but the release was made from ${{github.sha}}, the version number will not be automatically bumped."
+
+      - name: PRINT
+        run: |
+          echo "CURR REV: '$CURRENT_SHA'"
+          echo "MAIN REV: '$MAIN_SHA'"
+        env:
+          CURRENT_SHA: ${{github.sha}}
+          MAIN_SHA: ${{steps.main_revision.sha}}
+
