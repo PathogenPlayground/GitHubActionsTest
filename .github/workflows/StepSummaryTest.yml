@@ -7,13 +7,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: |
-        echo "# Hello, world! 🚀" >> $GITHUB_STEP_SUMMARY
-        echo "" >> $GITHUB_STEP_SUMMARY
-        echo "This is a test of the emergency broadcast system" >> $GITHUB_STEP_SUMMARY
-        echo "" >> $GITHUB_STEP_SUMMARY
-        echo "| Tables | Wow |" >> $GITHUB_STEP_SUMMARY
-        echo "|--------|-----|" >> $GITHUB_STEP_SUMMARY
-        echo "| a | b |" >> $GITHUB_STEP_SUMMARY
+          echo "# Hello, world! 🚀" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "This is a test of the emergency broadcast system" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| Tables | Wow |" >> $GITHUB_STEP_SUMMARY
+          echo "|--------|-----|" >> $GITHUB_STEP_SUMMARY
+          echo "| a | b |" >> $GITHUB_STEP_SUMMARY
   other:
     name: Other
     environment: TestEnvironment
