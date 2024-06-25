@@ -3,7 +3,7 @@ on:
   push
 jobs:
   run:
-    name: Test
+    name: Test job
     runs-on: ubuntu-latest
     steps:
       - run: |
@@ -15,6 +15,7 @@ jobs:
           echo "|--------|-----|" >> $GITHUB_STEP_SUMMARY
           echo "| a | b |" >> $GITHUB_STEP_SUMMARY
   other:
+    needs: run
     name: Other
     environment: TestEnvironment
     runs-on: ubuntu-latest
