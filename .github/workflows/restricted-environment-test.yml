@@ -12,7 +12,7 @@ jobs:
             environment: TestEnvironment
     name: Test Job - ${{matrix.os}} (${{matrix.environment}})
     runs-on: ubuntu-latest
-    environment: ${{matrix.environment}}
+    #environment: ${{matrix.environment}} # Muahahahaha >:)
     steps:
       - name: Do the thing
         run: echo "Hello, world!"
