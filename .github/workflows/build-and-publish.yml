@@ -1,29 +1,53 @@
+#      #####    ##                                   /                        ##
+#   ######  /  #### /                              #/                          ##
+#  /#   /  /   ####/                               ##                          ##
+# /    /  /    # #                                 ##                          ##
+#     /  /     #                                   ##                          ##
+#    ## ##     #      /##  ###  /###     /##       ## /###     /##         ### ##  ###  /###     /###     /###      /###   ###  /###      /###
+#    ## ##     #     / ###  ###/ #### / / ###      ##/ ###  / / ###       ######### ###/ #### / / ###  / /  ###  / / ###  / ###/ #### /  / #### /
+#    ## ########    /   ###  ##   ###/ /   ###     ##   ###/ /   ###     ##   ####   ##   ###/ /   ###/ /    ###/ /   ###/   ##   ###/  ##  ###/
+#    ## ##     #   ##    ### ##       ##    ###    ##    ## ##    ###    ##    ##    ##       ##    ## ##     ## ##    ##    ##    ##  ####
+#    ## ##     ##  ########  ##       ########     ##    ## ########     ##    ##    ##       ##    ## ##     ## ##    ##    ##    ##    ###
+#    #  ##     ##  #######   ##       #######      ##    ## #######      ##    ##    ##       ##    ## ##     ## ##    ##    ##    ##      ###
+#       /       ## ##        ##       ##           ##    ## ##           ##    ##    ##       ##    ## ##     ## ##    ##    ##    ##        ###
+#   /##/        ## ####    / ##       ####    /    ##    /# ####    /    ##    /#    ##       ##    /# ##     ## ##    ##    ##    ##   /###  ##
+#  /  #####      ## ######/  ###       ######/      ####/    ######/      ####/      ###       ####/ ## ########  ######     ###   ### / #### /
+# /     ##           #####    ###       #####        ###      #####        ###        ###       ###   ##  ### ###  ####       ###   ###   ###/
+# #                                                                                                            ###
+#  ##                                                                                                    ####   ###
+#                                                                                                      /######  /#
+#                                                                                                     /     ###/
+# Hi David, it's me, David. You're in here because you wanted to test something involving GitHub Packages I bet.
+# This workflow doesn't really match what you do in actual CI workflows anymore, so don't assume it does anything right lol.
+# (It was also hacked and slashed to bits by March 2025 David.)
 name: Build Project & Publish
 on: [workflow_dispatch]
 jobs:
   build:
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
-        configuration: [Debug, Release]
+        #os: [ubuntu-latest, windows-latest, macos-latest]
+        #configuration: [Debug, Release]
+        os: [ubuntu-latest]
+        configuration: [Release]
     runs-on: ${{matrix.os}}
     env:
       DOTNET_NOLOGO: true
       PackageId: GitHubActionsTestPackage
     steps:
     - uses: actions/checkout@v4
-    - uses: actions/setup-python@v5
-      with:
-        python-version: '3.11'
+    #- uses: actions/setup-python@v5
+    #  with:
+    #    python-version: '3.11'
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: 8
-    - name: Configure NuGet
-      run: python .github/workflows/make-nuget-config.py
-      env:
-        GITHUB_REPOSITORY_OWNER: ${{github.repository_owner}}
-        GITHUB_TOKEN: ${{github.token}}
+    #- name: Configure NuGet
+    #  run: python .github/workflows/make-nuget-config.py
+    #  env:
+    #    GITHUB_REPOSITORY_OWNER: ${{github.repository_owner}}
+    #    GITHUB_TOKEN: ${{github.token}}
     - name: Restore
       run: dotnet restore
     - name: Build
@@ -34,8 +58,10 @@ jobs:
       if: matrix.configuration == 'Release'
       # Note: The "No API Key was provided and no API Key could be found" warning on this command can be ignored. Not sure why NuGet complains since it definitely picks it up from setup-dotnet.
       # Don't try to use "packages/*.nupkg" here, it is not portable between Windows and *nix.
-      run: dotnet nuget push *.nupkg --no-symbols=true --source=github
-      working-directory: packages
+      #run: dotnet nuget push *.nupkg --no-symbols=true --source=github
+      #working-directory: packages
+      # All the above is old and wrong...probably. Or maybe I just stopped caring about pushing packages from Windows lel
+      run: dotnet nuget push "packages/*.nupkg" --skip-duplicate --no-symbols --api-key ${{secrets.GITHUB_TOKEN}} --source https://nuget.pkg.github.com/${{github.repository_owner}}
     - uses: actions/upload-artifact@v4
       with:
         name: nuget-package-${{matrix.os}}-${{matrix.configuration}}
