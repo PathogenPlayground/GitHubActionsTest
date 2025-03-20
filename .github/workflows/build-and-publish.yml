@@ -11,14 +11,14 @@ jobs:
       DOTNET_NOLOGO: true
       PackageId: GitHubActionsTestPackage
     steps:
-    - uses: actions/checkout@v2
-    - uses: actions/setup-python@v2
+    - uses: actions/checkout@v4
+    - uses: actions/setup-python@v5
       with:
-        python-version: '3.8'
+        python-version: '3.11'
     - name: Setup .NET Core
-      uses: actions/setup-dotnet@v1
+      uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: 5.0.100-preview.6.20318.15
+        dotnet-version: 8
     - name: Configure NuGet
       run: python .github/workflows/make-nuget-config.py
       env:
@@ -36,7 +36,7 @@ jobs:
       # Don't try to use "packages/*.nupkg" here, it is not portable between Windows and *nix.
       run: dotnet nuget push *.nupkg --no-symbols=true --source=github
       working-directory: packages
-    - uses: actions/upload-artifact@v2
+    - uses: actions/upload-artifact@v4
       with:
         name: nuget-package-${{matrix.os}}-${{matrix.configuration}}
         path: packages/**/*.nupkg
