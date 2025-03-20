@@ -36,7 +36,7 @@ jobs:
     runs-on: ${{matrix.os}}
     env:
       DOTNET_NOLOGO: true
-      PackageId: GitHubActionsTestPackage
+      PackageId: GitHubActionsTestPackage2
     steps:
     - uses: actions/checkout@v4
     #- uses: actions/setup-python@v5
