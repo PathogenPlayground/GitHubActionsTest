@@ -1,6 +1,7 @@
 name: Step Summary Test
 on:
-  push
+#  push
+  workflow_dispatch
 jobs:
   run:
     name: Test job
