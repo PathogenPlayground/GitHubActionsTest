@@ -1,0 +1,18 @@
+name: BaGetter Test
+on: [workflow_dispatch, push]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 8.x
+    - name: Start server
+      run: |
+        wget https://github.com/bagetter/BaGetter/releases/download/v1.6.0/bagetter-1.6.0.zip
+        unzip bagetter-1.6.0.zip
+        dotnet bagetter.dll &
+        ip addr
+    - name: Wait for a while
+      run: sleep 300
