@@ -5,7 +5,7 @@ jobs:
   empty-matrix:
     strategy:
       fail-fast: false
-      matrix:
+      matrix: ${{fromJson('{}')}}
     name: Job with empty matrix
     runs-on: ubuntu-latest
     steps:
