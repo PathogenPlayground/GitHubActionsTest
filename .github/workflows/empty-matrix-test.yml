@@ -3,6 +3,7 @@ on:
   push
 jobs:
   empty-matrix:
+    if: false
     strategy:
       fail-fast: false
       matrix: ${{fromJson('{}')}}
