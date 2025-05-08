@@ -1,0 +1,28 @@
+name: Job concurrency group test
+on: [workflow_dispatch, push]
+jobs:
+  main-job:
+    name: Main job
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo "Doing some stuff..."
+          sleep 45s
+          echo "Done!"
+  deploy-job:
+    name: Concurrency-limited job
+    runs-on: ubuntu-latest
+    concurrency:
+      group: test-concurrency-group
+      cancel-in-progress: true
+    steps:
+      - run: |
+          echo "Deploying or something..."
+          sleep 60s
+          echo "Done!"
+  after-main-job:
+    name: Job after the main job
+    runs-on: ubuntu-latest
+    needs: [main-job]
+    steps:
+      - run: echo "This job executed!"
