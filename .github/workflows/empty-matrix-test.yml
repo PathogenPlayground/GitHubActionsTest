@@ -13,6 +13,7 @@ jobs:
       - run: echo "Hello, world!"
   something-else:
     needs: [ empty-matrix ]
+    if: always()
     name: Something else after the empty job
     runs-on: ubuntu-latest
     steps:
