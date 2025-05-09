@@ -22,6 +22,3 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: echo "From another job" >> $GITHUB_STEP_SUMMARY
-      - run: |
-          echo "" >> $GITHUB_STEP_SUMMARY
-          curl https://bonsai-rx.org/docs/logo.svg -o - >> $GITHUB_STEP_SUMMARY
