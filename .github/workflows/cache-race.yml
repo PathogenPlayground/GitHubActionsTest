@@ -1,3 +1,6 @@
+# Verdict: The caching service handles this silently
+# The "late" job (Platform B in this case) will quietly print the following message in the post step for actions/cache:
+# > Failed to save: Unable to reserve cache with key test-key, another job may be creating this cache.
 name: Test actions/cache race handling
 on:
   push:

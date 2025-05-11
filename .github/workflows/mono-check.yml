@@ -1,0 +1,22 @@
+name: Mono check
+on:
+  push:
+  workflow_dispatch:
+jobs:
+  run:
+    strategy:
+      fail-fast: false
+      matrix:
+        platform:
+          - name: macOS 13 x64
+            os: macos-13
+          - name: macOS 14 aarch64
+            os: maxos-14
+          - name: macOS 15 aarch64
+            os: macos-15
+    name: Test ${{matrix.platform.name}}
+    runs-on: ${{matrix.platform.os}}
+    steps:
+      - run: |
+          mono &
+          fuser /usr/libexec/rosetta/runtime
