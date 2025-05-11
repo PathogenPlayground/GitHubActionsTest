@@ -11,12 +11,13 @@ jobs:
           - name: macOS 13 x64
             os: macos-13
           - name: macOS 14 aarch64
-            os: maxos-14
+            os: macos-14
           - name: macOS 15 aarch64
             os: macos-15
     name: Test ${{matrix.platform.name}}
     runs-on: ${{matrix.platform.os}}
     steps:
+      - uses: actions/checkout@v4
       - run: |
-          mono &
+          mono SlowNetFrameworkApp.exe &
           fuser /usr/libexec/rosetta/runtime
