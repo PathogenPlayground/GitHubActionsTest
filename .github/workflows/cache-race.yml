@@ -1,0 +1,28 @@
+name: Test actions/cache race handling
+on:
+  push:
+  workflow_dispatch:
+jobs:
+  run:
+    strategy:
+      fail-fast: false
+      matrix:
+        platform:
+          - name: Platform A
+            os: ubuntu-latest
+            sleep: 1
+          - name: Platform B
+            os: ubuntu-latest
+            sleep: 10
+    name: Test setup-bonsai on ${{matrix.platform.name}}
+    runs-on: ${{matrix.platform.os}}
+    steps:
+      - uses: actions/cache@v4
+        id: cache
+        with:
+          path: test.txt
+          key: test-key
+      - if: steps.cache.outputs.cache-hit != 'true'
+        run: echo Hello, world! | tee test.txt
+      - run: cat test.txt
+      - run: sleep ${{matrix.platform.sleep}}
