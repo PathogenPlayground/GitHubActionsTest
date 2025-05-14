@@ -1,0 +1,16 @@
+# https://docs.github.com/en/actions/writing-workflows/choosing-when-your-workflow-runs/events-that-trigger-workflows#workflow_run
+name: workflow_run source
+on:
+  push:
+  pull_request:
+jobs:
+  hi:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo Hello!
+      - run: echo "Artifact from run ${{github.run_number}}" >> output.txt
+      - uses: actions/upload-artifact@v4
+        with:
+          name: test-artifact
+          if-no-files-found: error
+          path: output.txt

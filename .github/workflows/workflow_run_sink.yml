@@ -1,0 +1,17 @@
+name: workflow_run sink
+on:
+  workflow_run:
+    workflows: ["workflow_run_source"]
+    types: ["completed"]
+  jobs:
+    test:
+      runs-on: ubuntu-latest
+      steps:
+        - run: cat <<< "$heck"
+          env:
+            heck: ${{toJSON(github.event)}}
+        - uses: actions/download-artifact@v4
+          with:
+            run-id: ${{github.event.workflow_run.id}}
+            name: test-artifact
+        - run: cat output.txt
