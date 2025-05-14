@@ -1,7 +1,8 @@
 name: workflow_run sink
 on:
   workflow_run:
-    workflows: ["workflow_run_source"]
+    # This cannot be the file name, it must be the display name :/
+    workflows: ["workflow_run source"]
     types: ["completed"]
 jobs:
   test:
