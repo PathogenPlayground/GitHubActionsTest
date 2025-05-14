@@ -18,20 +18,21 @@ jobs:
   test:
     name: Main job thing
     # Using a workflow from the local repo
-    uses: ./.github/subworkflow.yml
+    uses: ./.github/workflows/subworkflow.yml
     with:
       username: Path
   test-noname:
     uses: ./.github/workflows/subworkflow.yml
     with:
       username: Pathogen
-  test2:
-    name: Test using composite action
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - id: foo
-        uses: ./.github/workflows/hello-world-composite-action
-        with:
-          who-to-greet: Path
-      - run: echo random-number ${{ steps.foo.outputs.random-number }}
+# These flatten entirely, they're really just an alternative to writing actions in JS/TS
+#  test2:
+#    name: Test using composite action
+#    runs-on: ubuntu-latest
+#    steps:
+#      - uses: actions/checkout@v2
+#      - id: foo
+#        uses: ./.github/workflows/hello-world-composite-action
+#        with:
+#          who-to-greet: Path
+#      - run: echo random-number ${{ steps.foo.outputs.random-number }}
