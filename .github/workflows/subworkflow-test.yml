@@ -18,7 +18,7 @@ jobs:
   test:
     name: Main job thing
     # Using a workflow from the local repo
-    uses: ./.github/workflows/subworkflow.yml
+    uses: ./.github/subworkflow.yml
     with:
       username: Path
   test-noname:
