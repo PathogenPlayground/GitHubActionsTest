@@ -1,8 +1,5 @@
 # This tests having a "subworkflow" using reusable workflows
 # https://docs.github.com/en/actions/learn-github-actions/reusing-workflows
-# This doesn't really work how I'd like it to right now, but in the future it might:
-# https://github.community/t/ref-head-in-reusable-workflows/203690/4
-# -- Edit: Work's how I'd hope now! https://github.blog/changelog/2022-01-25-github-actions-reusable-workflows-can-be-referenced-locally/
 # ==========================
 # There's a second variant using composite actions instead
 # https://docs.github.com/en/actions/creating-actions/creating-a-composite-action
@@ -15,20 +12,12 @@
 # It also seems to be a watered down version of the workflow syntax. (For instance naming steps doesn't work.)
 # -- Actualy naming steps supposedly should work, but doesn't appear anywhere from what I can see https://docs.github.com/en/actions/creating-actions/metadata-syntax-for-github-actions#runsstepsname
 # -- It's still a watered down version of the workflow syntax though.
-# I think it's probably best that we wait for local reusable workflows.
-# Sadly this isn't on the GitHub roadmap yet, so I'm not holding my breath on it.
-# In theory I just hard-code the owner/repo and `main` reference but that doesn't really jive well with my CI development workflow...
 name: Subworkflow Test
 on: [workflow_dispatch]
 jobs:
   test:
     name: Main job thing
-    # This does not work, very annoying they don't have any special syntax for "Just use a file in this repo"
-    #uses: ${{github.repository}}/.github/workflows/subworkflow.yml@${{github.sha}}
-    # This doesn't work either, seems expressions just aren't even allowed here.
-    #uses: PathogenPlayground/GitHubActionsTest/.github/workflows/subworkflow.yml@${{github.sha}}
-    #uses: PathogenPlayground/GitHubActionsTest/.github/workflows/subworkflow.yml@main
-    # Just released! https://github.blog/changelog/2022-01-25-github-actions-reusable-workflows-can-be-referenced-locally/
+    # Using a workflow from the local repo
     uses: ./.github/workflows/subworkflow.yml
     with:
       username: Path
@@ -36,13 +25,13 @@ jobs:
     uses: ./.github/workflows/subworkflow.yml
     with:
       username: Pathogen
-#  test2:
-#    name: Test using composite action
-#    runs-on: ubuntu-latest
-#    steps:
-#      - uses: actions/checkout@v2
-#      - id: foo
-#        uses: ./.github/workflows/hello-world-composite-action
-#        with:
-#          who-to-greet: Path
-#      - run: echo random-number ${{ steps.foo.outputs.random-number }}
+  test2:
+    name: Test using composite action
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - id: foo
+        uses: ./.github/workflows/hello-world-composite-action
+        with:
+          who-to-greet: Path
+      - run: echo random-number ${{ steps.foo.outputs.random-number }}
