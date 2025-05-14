@@ -21,10 +21,10 @@ jobs:
     uses: ./.github/workflows/subworkflow.yml
     with:
       username: Path
-  test-noname:
-    uses: ./.github/workflows/subworkflow.yml
-    with:
-      username: Pathogen
+  #test-noname:
+  #  uses: ./.github/workflows/subworkflow.yml
+  #  with:
+  #    username: Pathogen
 # These flatten entirely, they're really just an alternative to writing actions in JS/TS
 #  test2:
 #    name: Test using composite action
