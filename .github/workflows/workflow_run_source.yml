@@ -1,4 +1,7 @@
 # https://docs.github.com/en/actions/writing-workflows/choosing-when-your-workflow-runs/events-that-trigger-workflows#workflow_run
+# There is unfortunately not any sort of feedback on the source workflow that a sink workflow was triggered or what its status is.
+# The sink will be marked as having been triggered by whoever triggered this workflow, but it does not show the orginal tirgger reason (IE: push to `main2`)
+# It also doesn't give you a link back to the triggering workflow or anything either, which is pretty lame.
 name: workflow_run source
 on:
   push:
