@@ -5,7 +5,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "Hello, world from run ${{github.run_number}}" >> index.html
+      - run: echo "Hello, world from run ${{github.run_number}}!!!" >> index.html
       - uses: actions/upload-pages-artifact@v3
         with:
           path: .
