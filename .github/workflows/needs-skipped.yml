@@ -11,6 +11,7 @@ jobs:
     steps:
       - name: Step
         run: echo "Hello, world!"
+      - run: sleep 10
       - name: Fail
         if: github.event.inputs.should_fail == 'true'
         run: false
