@@ -41,7 +41,7 @@ jobs:
     if: ${{!cancelled() && !failure()}}
     steps:
       - run: echo "I am the last step"
-  end2:
+  end3:
     runs-on: ubuntu-latest
     needs: [two-skipped, two-skipped2]
     if: ${{!cancelled() && !failure()}}
