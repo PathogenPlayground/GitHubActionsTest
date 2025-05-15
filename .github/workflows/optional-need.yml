@@ -5,6 +5,9 @@ on:
       should_fail:
         description: "Should fail?"
         default: "false"
+      should_two_fail:
+        description: "Should two fail?"
+        default: "false"
 jobs:
   one:
     runs-on: ubuntu-latest
@@ -23,27 +26,34 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: echo "Empty world but it doesn't get skipped."
+      - name: Fail
+        if: github.event.inputs.should_two_fail == 'true'
+        run: false
   two-skipped2:
     runs-on: ubuntu-latest
     if: false
     steps:
       - run: echo "Empty world."
 
+  # if: ${{!cancelled() && !failure()}}
+  # This almost works perfect, but it doesn't do what you'd want when both jobs get skipped
+  # `end3` will actually *alwaus* run here
+
   end1:
     runs-on: ubuntu-latest
     needs: [one, two]
-    if: ${{!cancelled() && !failure()}}
+    if: ${{!cancelled() && !failure() && needs.one.result == 'success'}}
     steps:
       - run: echo "I am the last step"
   end2:
     runs-on: ubuntu-latest
     needs: [one, two-skipped]
-    if: ${{!cancelled() && !failure()}}
+    if: ${{!cancelled() && !failure() && needs.one.result == 'success'}}
     steps:
       - run: echo "I am the last step"
   end3:
     runs-on: ubuntu-latest
     needs: [two-skipped, two-skipped2]
-    if: ${{!cancelled() && !failure()}}
+    if: ${{!cancelled() && !failure() && needs.two-skipped.result == 'success'}}
     steps:
       - run: echo "I am the last step"
