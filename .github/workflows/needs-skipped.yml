@@ -24,6 +24,7 @@ jobs:
   three:
     runs-on: ubuntu-latest
     needs: [one, two]
+    # This one runs only when one fails (and two being skipped does not suppress it)
     if: failure()
     steps:
       - name: Step
@@ -38,6 +39,7 @@ jobs:
   three3:
     runs-on: ubuntu-latest
     needs: [one, two]
+    # ⚠ This one will run even if the workflow was cancelled
     if: ${{!failure()}}
     steps:
       - name: Step
@@ -49,6 +51,13 @@ jobs:
       !cancelled()
       && needs.one.result == 'success'
       && contains('success skipped', needs.two.result)
+    steps:
+      - name: Step
+        run: echo "I am the last step"
+  three5:
+    runs-on: ubuntu-latest
+    needs: [one, two]
+    if: ${{!cancelled()}}
     steps:
       - name: Step
         run: echo "I am the last step"
