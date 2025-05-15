@@ -38,6 +38,7 @@ jobs:
   # if: ${{!cancelled() && !failure()}}
   # This almost works perfect, but it doesn't do what you'd want when both jobs get skipped
   # `end3` will actually *alwaus* run here
+  # Makes sense and it's easy to fix by ensuring that the not-supposed-to-skip job is always success
 
   end1:
     runs-on: ubuntu-latest
