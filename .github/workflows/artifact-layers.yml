@@ -13,7 +13,7 @@ jobs:
         with:
           name: Artifact1
           if-no-files-found: error
-          path: '**.txt'
+          path: './**'
   job2:
     runs-on: ubuntu-latest
     steps:
@@ -23,7 +23,7 @@ jobs:
         with:
           name: Artifact2
           if-no-files-found: error
-          path: '**.txt'
+          path: './**'
   merge:
     runs-on: ubuntu-latest
     needs: [job1, job2]
