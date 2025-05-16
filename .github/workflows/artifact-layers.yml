@@ -6,14 +6,14 @@ jobs:
   job1:
     runs-on: ubuntu-latest
     steps:
-      - run: mkdir stuff
-      - run: echo "Artifact from run job1" >> stuff/output.txt
-      - run: echo "Artifact from run job1" >> stuff/output1.txt
+      - run: mkdir -p artifacts/docs/site/
+      - run: echo "Artifact from run job1" >> artifacts/docs/site/output.txt
+      - run: echo "Artifact from run job1" >> artifacts/docs/site/output1.txt
       - uses: actions/upload-artifact@v4
         with:
           name: Artifact1
           if-no-files-found: error
-          path: './**'
+          path: artifacts/docs/site/
   job2:
     runs-on: ubuntu-latest
     steps:
@@ -23,7 +23,7 @@ jobs:
         with:
           name: Artifact2
           if-no-files-found: error
-          path: './**'
+          path: '*'
   merge:
     runs-on: ubuntu-latest
     needs: [job1, job2]
