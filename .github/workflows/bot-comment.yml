@@ -1,3 +1,4 @@
+# Note that this doesn't work for external contributors!
 name: PR bot comment test
 on:
   pull_request:
