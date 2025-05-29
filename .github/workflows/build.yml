@@ -23,4 +23,4 @@ jobs:
     - uses: actions/upload-artifact@v4
       with:
         name: nuget-package
-        path: GitHubActionsTest/bin/Release/*.nupkg
+        path: artifacts/package/release/*.nupkg
