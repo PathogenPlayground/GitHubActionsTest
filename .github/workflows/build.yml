@@ -2,7 +2,7 @@ name: Build Project
 on: [push, workflow_dispatch, pull_request]
 jobs:
   build:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     env:
       DOTNET_NOLOGO: 1
       DOTNET_CLI_TELEMETRY_OPTOUT: 1
