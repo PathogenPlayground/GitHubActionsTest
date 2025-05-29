@@ -1,6 +1,5 @@
 name: Build Project
-#on: [workflow_dispatch, push, pull_request]
-on: [workflow_dispatch, pull_request]
+on: [push, workflow_dispatch, pull_request]
 jobs:
   build:
     runs-on: windows-latest
@@ -10,20 +9,18 @@ jobs:
       DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
       DOTNET_GENERATE_ASPNET_CERTIFICATE: 0
     steps:
-    - uses: actions/checkout@v2
-    - name: Setup .NET Core
-      uses: actions/setup-dotnet@v1
+    - uses: actions/checkout@v4
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: 5.0.100-preview.6.20318.15
-    - name: Show DOTNET_NOLOGO
-      run: echo DOTNET_NOLOGO=$Env:DOTNET_NOLOGO
+        dotnet-version: '8.0.x'
     - name: Restore
       run: dotnet restore
     - name: Build
       run: dotnet build --configuration Release --no-restore
     - name: Pack
       run: dotnet pack --configuration Release --no-build
-    - uses: actions/upload-artifact@v2
+    - uses: actions/upload-artifact@v4
       with:
         name: nuget-package
         path: GitHubActionsTest/bin/Release/*.nupkg
