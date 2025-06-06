@@ -1,0 +1,14 @@
+name: Write variable
+on:
+  push:
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+    - run: echo olod value = '${{vars.TEST_VARIABLE2}}'
+    - run: gh variable set TEST_VARIABLE2 --body "Last run was ${{github.run_number}}" --repo ${{github.repository}}
+      env:
+        GH_TOKEN: ${{github.token}}
