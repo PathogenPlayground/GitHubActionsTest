@@ -1,0 +1,12 @@
+name: Run w/ inputs
+on:
+  push:
+  workflow_dispatch:
+jobs:
+  make-release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Test
+        run: echo "'$INPUT_TEST-INPUT'"
+        with:
+          test-input: Lol
