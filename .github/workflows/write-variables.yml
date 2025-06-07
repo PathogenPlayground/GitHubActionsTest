@@ -1,3 +1,4 @@
+# Sadly (for the specific case I was investigating, but maybe not for security lol) `contents:write` doesn't let you update variables
 name: Write variable
 on:
   push:
